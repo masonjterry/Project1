@@ -2,3 +2,10 @@
   width: 400px;
   height: 400px;
 }
+
+#main, #temp, #icon {
+  border: solid 1px #000;
+  max-width: 10%;
+  background-color: #999;
+  text-align: center;
+}
