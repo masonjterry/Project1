@@ -4,8 +4,30 @@
 }
 
 #main, #temp, #icon {
-  border: solid 1px #000;
-  max-width: 10%;
-  background-color: #999;
   text-align: center;
+  padding: 5px;
+  font-weight: 700;
+}
+
+#main, #temp {
+  background-color: #fc3;
+}
+
+#main {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+#temp {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#icon {
+  background-color: #fff;
+}
+
+#weather {
+  max-width: 8%;
+  font-family: sans-serif;
 }

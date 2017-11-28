@@ -26,9 +26,15 @@ var map, infoWindow;
           console.log("icon", response.weather[0].icon);
           var icon = "http://openweathermap.org/img/w/"+response.weather[0].icon+".png";
           var iconImg = $("<img src=\""+icon+"\">");
+          var mainDiv = $("<div>").attr("id", "main");
+          var iconDiv = $("<div>").attr("id", "icon");
+          var tempDiv = $("<div>").attr("id", "temp");
+          $("#weather").append(mainDiv);
           $("#main").append(response.weather[0].main);
+          $("#weather").append(iconDiv);
           $("#icon").append(iconImg);
-          $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67));
+          $("#weather").append(tempDiv);
+          $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
         });
 
         infoWindow.setPosition(pos);
