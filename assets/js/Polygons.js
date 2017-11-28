@@ -2,6 +2,11 @@ var poly;
 var map;
 var infoWindow
 
+// Define the LatLng coordinates for the polygon's path.
+var polygonCoords = [
+    {lat: 30.2870379, lng: -97.7313409}
+];
+
 //find user location
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -13,7 +18,7 @@ function initMap() {
 	//GEOLOCATION 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-        	var pos = {
+        	pos = {
             	lat: position.coords.latitude,
             	lng: position.coords.longitude
         	};
@@ -33,15 +38,17 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-    //MAP PINS AND POLYLINES
-	poly = new google.maps.Polyline({
-          strokeColor: '#000000',
-          strokeOpacity: 1.0,
-          strokeWeight: 3
+    // PINS AND POLYGONS
+    poly = new google.maps.Polygon({
+        paths: polygonCoords,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35
     });
     poly.setMap(map);
 
-    // Add a listener for the click event
 	map.addListener('click', addLatLng);
 };
 
