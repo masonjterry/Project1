@@ -1,6 +1,27 @@
  $(document).ready(function() {
 
 
+  var config = {
+    apiKey: "AIzaSyBVKQZeo1H6cABaYb09pdm4Ez2ZXhhSY_A",
+    authDomain: "streettron-1d8c5.firebaseapp.com",
+    databaseURL: "https://streettron-1d8c5.firebaseio.com",
+    projectId: "streettron-1d8c5",
+    storageBucket: "",
+    messagingSenderId: "679629315262"
+};
+
+firebase.initializeApp(config);
+
+var database = firebase.database();
+
+
+var score=0;
+var currentTemp=0;
+var currentCond="";
+var currentPlace="";
+var scorearray=[];
+var highscorearray=[];
+
 // var map, infoWindow;
   // function initMap() {
    //  map = new google.maps.Map(document.getElementById('map'), {
@@ -23,10 +44,10 @@ var lng=-97.7430608;
           url: weatherURL,
           method: "GET"
         }).done(function(response) {
-          // console.log("response", response);
-          // console.log("main", response.weather[0].main);
-          // console.log("temperature", Math.floor(response.main.temp * 9/5 - 459.67));
-          // console.log("icon", response.weather[0].icon);
+
+          currentCond=(response.weather[0].main);
+          currentPlace=(response.name);
+
           var icon = "http://openweathermap.org/img/w/"+response.weather[0].icon+".png";
           var iconImg = $("<img src=\""+icon+"\">");
           var mainDiv = $("<div>").attr("id", "city");
@@ -40,6 +61,8 @@ var lng=-97.7430608;
           $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
         });
 
+        // console.log(response.name);
+        // currentTemp=(response.main.temp * 9/5 - 459.67);
  //       infoWindow.setPosition(pos);
  //        infoWindow.setContent('Location found.');
  //        infoWindow.open(map);
@@ -82,12 +105,90 @@ function endgame(){
 	 $("#display").text("Over");
 
     //Output the score to the html IDs
-    $("#score").text("0000");
+    $("#score").text(score);
+
+if (score > scorearray[8]){
+
+    // Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+
+    modal.style.display = "block";
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+}
 
 }
 
 
+$(".close").on("click", function(event) {
+  event.preventDefault();
 
+  // Grabs new Highscorer initials
+  var highscorer = $("#highscore-name-input").val().trim();
+
+console.log(highscorer);
+
+
+  // // Creates local "temporary" object for holding new highscore data
+  var newHigh = {
+    name: highscorer,
+    score: score,
+    place: currentPlace,
+    weathercond: currentCond
+  };
+
+  // // Uploads highscore data to the database
+  database.ref().push(newHigh);
+
+
+});
+
+
+// 3. Create Firebase event for adding hignhscore to the database and a row in the html when a user adds an entry
+database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+
+  console.log(childSnapshot.val());
+
+  // Store everything into a variable.
+  var HighName = childSnapshot.val().name;
+  var HighScore = childSnapshot.val().score;
+  var HighPlace = childSnapshot.val().place;
+  var HighCond = childSnapshot.val().weathercond;
+  
+  // var objectScore = {
+  //   highName: HighName,
+  //   highScore: HighScore,
+  //   highPlace: HighPlace,
+  //   highCond: HighCond
+  // }
+  highscorearray.push(childSnapshot.val());
+  scorearray.push(childSnapshot.val().score);
+
+  console.log(scorearray);
+
+  // if(testing.length===9){
+  //   hello();
+  // }
+
+// console.log(childSnapshot.val().name);
+
+  // Add each highscorer's data into the table
+  $("#score-table > tbody").append("<tr><td>" + HighName + "</td><td>" + HighScore + "</td><td>" +
+  HighPlace + "</td><td>" + HighCond + "</td><td>");
+});
+
+// function hello(){
+//   console.log(testing);
+// }
 function maingame(){
   console.log("start of game")
 

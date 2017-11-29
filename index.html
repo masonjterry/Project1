@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+      <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+    <!-- Moment.js Reference -->
+    <!-- <script src="http://momentjs.com/downloads/moment.js"></script>   -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
 </head>
 <body>
@@ -100,20 +105,45 @@
 <div id="leaderboard" class="col-lg-6">
 <!--   Pull this from Firebase -->
   <h2>Leaderboard</h2>
-  <ol type="1">
-    <li>Player 1 : 0000</li>
-    <li>Player 2 : 0000</li>
-    <li>Player 3 : 0000</li>
-    <li>Player 4 : 0000</li>
-    <li>Player 5 : 0000</li>
-  </ol>
+
+                <table class="table" id='score-table'>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Place</th>
+                    <th>Weather</th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
 </div>
   <div class="col-lg-3">
   </div>
 </div>
+<!-- <button id="myBtn">Open Modal</button> -->
 
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">Submit</span>
+ <form>
+                <div class="form-group">
+                  <label for="highscore-name-input">New Highscorer Name</label>
+                  <input class="form-control" id="highscore-name-input" type="text">
+                </div>
+                </form>
+  </div>
+
+</div>
 <!-- Hide the restart assets until the game is over -->
 	<div class="reinit hidden">
+
+
 
 <div class="row">
 	
