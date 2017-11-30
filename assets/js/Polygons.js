@@ -13,6 +13,7 @@ var polyMarkers =[{lat: 30.287200799999997, lng: -97.7288768}]; //THIS DOES THE 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), { 
         zoom: 20
+<<<<<<< HEAD
 	});
 	infoWindow = new google.maps.InfoWindow;
     
@@ -23,6 +24,18 @@ function initMap() {
             	lat: position.coords.latitude,
             	lng: position.coords.longitude
         	};
+=======
+    });
+    infoWindow = new google.maps.InfoWindow;
+    
+    //GEOLOCATION 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+>>>>>>> 88543b8681593a2a03bf6b775a975a8e20eb15b6
             //pushes geolocation to array for markers readabale format
             // polyMarkers.push(pos); ---CURRENTLY DOESN'T WORK
 
@@ -30,6 +43,7 @@ function initMap() {
             polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
 
             //Shows map over geolocation coordinates
+<<<<<<< HEAD
         	infoWindow.setPosition(pos);
         	infoWindow.setContent('Start');
         	infoWindow.open(map);
@@ -37,6 +51,15 @@ function initMap() {
             poly.setMap(map);
     	}, 
     	function() {
+=======
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Start');
+            infoWindow.open(map);
+            map.setCenter(pos);
+            poly.setMap(map);
+        }, 
+        function() {
+>>>>>>> 88543b8681593a2a03bf6b775a975a8e20eb15b6
             handleLocationError(true, infoWindow, map.getCenter());
         });
     } else {
@@ -55,7 +78,11 @@ function initMap() {
     });
     poly.setMap(map);
 
+<<<<<<< HEAD
 	map.addListener('click', addMarker);
+=======
+    map.addListener('click', addMarker);
+>>>>>>> 88543b8681593a2a03bf6b775a975a8e20eb15b6
     map.addListener('click', addToCompute);
     map.addListener('click', getArea);
 };
@@ -92,4 +119,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 88543b8681593a2a03bf6b775a975a8e20eb15b6
