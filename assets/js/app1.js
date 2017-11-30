@@ -1,13 +1,9 @@
-// This example creates an interactive map which constructs a polyline based on
-// user clicks. Note that the polyline only appears once its path property
-// contains two LatLng coordinates.
-
 var poly;
 var map;
 var infoWindow;
 var pos;
-var lat;
-var lng;
+var latitude;
+var longitude;
 var areaArr = [];
 
 function initMap() {
@@ -75,7 +71,7 @@ function initMap() {
     poly.setMap(map);
 
     // Add a listener for the click event
-        //map.addListener("click", addLatLng);
+        map.addListener("click", addLatLng);
         $("button").on("click", addLatLng);
       }
 
@@ -83,7 +79,7 @@ function initMap() {
         lat = x;
         lng = y;
 
-        areaArr.push(new google.maps.LatLng(lat, lng));
+        areaArr.push(lat, lng);
       }
 
       // Handles click events on a map, and adds a new point to the Polyline.
@@ -91,7 +87,6 @@ function initMap() {
 
         addToAreaArr(latitude, longitude);
         console.log("areaArr", areaArr);
-        alert("you clicked");
 
         var path = poly.getPath();
 
