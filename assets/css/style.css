@@ -2,3 +2,32 @@
   width: 400px;
   height: 400px;
 }
+
+#city, #temp, #icon {
+  text-align: center;
+  font-weight: 700;
+}
+
+#city, #temp {
+  background-color: #fc3;
+  padding: 5px;
+}
+
+#city {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+#temp {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#icon {
+  background-color: #eee;
+}
+
+#weather {
+  display: inline-block;
+  font-family: sans-serif;
+}
