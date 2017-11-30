@@ -28,7 +28,9 @@ function initMap() {
             $("button").click(addLocation);
 
             function addLocation() {
+
               addMarker();
+
               locationArr.push(pos);
 
               console.log(locationArr);
@@ -38,13 +40,13 @@ function initMap() {
             //Pushes geolocation coords to polygonCoords array in area readable format
             polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
 
-    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat="+pos.lat+"&lon="+pos.lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
+    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat="+pos.lat+"&lon="+pos.lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
 
     $.ajax({
       url: weatherURL,
       method: "GET"
     }).done(function(response) {
-      var icon = "http://openweathermap.org/img/w/"+response.weather[0].icon+".png";
+      var icon = "https://openweathermap.org/img/w/"+response.weather[0].icon+".png";
       var iconImg = $("<img src=\""+icon+"\">");
       var mainDiv = $("<div>").attr("id", "city");
       var iconDiv = $("<div>").attr("id", "icon");

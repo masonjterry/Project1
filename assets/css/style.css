@@ -1,33 +1,147 @@
-#map {
-  width: 400px;
-  height: 400px;
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-image: url("../images/tronback.jpg");
+    /*color: white;*/
 }
 
-#city, #temp, #icon {
-  text-align: center;
-  font-weight: 700;
+p{
+    padding:5px;
 }
 
-#city, #temp {
-  background-color: #fc3;
-  padding: 5px;
+h2{
+    text-align: center;
+    font-size: 25px;
+    color: grey;
 }
 
-#city {
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-}
-
-#temp {
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
-#icon {
-  background-color: #eee;
+h1{
+    text-align: center;
+    color: yellow;
 }
 
 #weather {
-  display: inline-block;
-  font-family: sans-serif;
+  text-align: center;
+  color: #fff;
+}
+
+#map {
+  text-align: center;
+  height: 400px;
+}
+
+.mapimage{
+    text-align: center;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+#timeleft{
+    color:red;
+    text-align: center;
+}
+
+#leaderboard{
+    font-size: 30px;
+    color: white;
+}
+
+#submit{
+    text-align: center;
+    background-color: green;
+    font-size: 40px;
+    border-radius:10px;
+
+}
+.results{
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 10px;
+
+}
+#right{
+    color:green;
+}
+#notright{
+    color:red;
+}
+.hidden{
+    display:none;
+}
+#logo{
+
+    text-align: center;
+    height: 300px;
+    border-radius: 30px;
+    border:solid;
+    border-color: grey;
+
+}
+
+.table{
+    font-size: 25px;
+}
+.initiate{
+    text-align: center;
+    margin-top: 30px;
+}
+#init{
+    text-align: center;
+    font-size: 30px;
+    color:white;
+}
+.reinit{
+    color:white;
+    font-size: 30px;
+    color:white;
+    text-align: center;
+}
+
+
+ol {
+   list-style-type: decimal;
+   list-style-position: inside;
+   margin-left: 15px;
+}
+#weather{
+/*border:solid;*/
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
