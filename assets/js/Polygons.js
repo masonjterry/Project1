@@ -11,55 +11,49 @@ var polyMarkers =[{lat: 30.287200799999997, lng: -97.7288768}]; //THIS DOES THE 
 
 //FIND USER
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), { 
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 20
-<<<<<<< HEAD
-	});
-	infoWindow = new google.maps.InfoWindow;
-    
-	//GEOLOCATION 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-        	pos = {
-            	lat: position.coords.latitude,
-            	lng: position.coords.longitude
-        	};
-=======
     });
     infoWindow = new google.maps.InfoWindow;
-    
-    //GEOLOCATION 
+
+    //GEOLOCATION
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
->>>>>>> 88543b8681593a2a03bf6b775a975a8e20eb15b6
-            //pushes geolocation to array for markers readabale format
-            // polyMarkers.push(pos); ---CURRENTLY DOESN'T WORK
 
             //Pushes geolocation coords to polygonCoords array in area readable format
             polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
 
+    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat="+pos.lat+"&lon="+pos.lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
+
+    $.ajax({
+      url: weatherURL,
+      method: "GET"
+    }).done(function(response) {
+      var icon = "http://openweathermap.org/img/w/"+response.weather[0].icon+".png";
+      var iconImg = $("<img src=\""+icon+"\">");
+      var mainDiv = $("<div>").attr("id", "city");
+      var iconDiv = $("<div>").attr("id", "icon");
+      var tempDiv = $("<div>").attr("id", "temp");
+      $("#weather").append(mainDiv);
+      $("#city").append(response.name + ", " + response.sys.country);
+      $("#weather").append(iconDiv);
+      $("#icon").append(iconImg);
+      $("#weather").append(tempDiv);
+      $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
+    });
+
             //Shows map over geolocation coordinates
-<<<<<<< HEAD
-        	infoWindow.setPosition(pos);
-        	infoWindow.setContent('Start');
-        	infoWindow.open(map);
-        	map.setCenter(pos);
-            poly.setMap(map);
-    	}, 
-    	function() {
-=======
             infoWindow.setPosition(pos);
             infoWindow.setContent('Start');
             infoWindow.open(map);
             map.setCenter(pos);
             poly.setMap(map);
-        }, 
+        },
         function() {
->>>>>>> 88543b8681593a2a03bf6b775a975a8e20eb15b6
             handleLocationError(true, infoWindow, map.getCenter());
         });
     } else {
@@ -78,16 +72,12 @@ function initMap() {
     });
     poly.setMap(map);
 
-<<<<<<< HEAD
-	map.addListener('click', addMarker);
-=======
     map.addListener('click', addMarker);
->>>>>>> 88543b8681593a2a03bf6b775a975a8e20eb15b6
     map.addListener('click', addToCompute);
     map.addListener('click', getArea);
 };
 
-//COMPUTES AREA EVERY TIME A NEW PIN IS ADDED 
+//COMPUTES AREA EVERY TIME A NEW PIN IS ADDED
 function getArea() {
     var area = google.maps.geometry.spherical.computeArea(polygonCoords);
     console.log(area);
@@ -110,7 +100,7 @@ function addMarker(event) {
         position: event.latLng,
         title: '#' + path.getLength(),
         map: map
-    }); 
+    });
 };
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -119,8 +109,4 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 88543b8681593a2a03bf6b775a975a8e20eb15b6
