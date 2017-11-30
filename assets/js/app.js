@@ -1,22 +1,6 @@
-// Google Map
-// var map, infoWindow;
-//   function initMap() {
-//     map = new google.maps.Map(document.getElementById('map'), {
-//       center: {lat: 30.267153, lng: -97.7430608},
-//       zoom: 18
-//     });
-//     infoWindow = new google.maps.InfoWindow;
-//
-//     if (navigator.geolocation) {
-//       navigator.geolocation.getCurrentPosition(function(position) {
-//         var pos = {
-//           lat: position.coords.latitude,
-//           lng: position.coords.longitude
-//         };
-
 var poly;
 var map;
-var infoWindow
+var infoWindow;
 var polygonCoords = [{lat: 30.2870379, lng: -97.7313409}];
 var pos = {};
 
@@ -65,7 +49,7 @@ function initMap() {
         });
 
         	infoWindow.setPosition(pos);
-        	infoWindow.setContent('Location found.');
+        	infoWindow.setContent('Start');
         	infoWindow.open(map);
         	map.setCenter(pos);
     	},
@@ -117,24 +101,3 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
 };
-
-  //       infoWindow.setPosition(pos);
-  //       infoWindow.setContent('Location found.');
-  //       infoWindow.open(map);
-  //       map.setCenter(pos);
-  //     }, function() {
-  //       handleLocationError(true, infoWindow, map.getCenter());
-  //     });
-  //   } else {
-  //     // If Browser doesn't support Geolocation
-  //     handleLocationError(false, infoWindow, map.getCenter());
-  //   }
-  // }
-  //
-  // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  //   infoWindow.setPosition(pos);
-  //   infoWindow.setContent(browserHasGeolocation ?
-  //                         'Error: The Geolocation service failed.' :
-  //                         'Error: Your browser doesn\'t support geolocation.');
-  //   infoWindow.open(map);
-  // }
