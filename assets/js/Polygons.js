@@ -6,6 +6,7 @@ var trail;
 var pos;
 var poly;
 
+var locationArr = [];
 var polygonCoords = [];
 var polyMarkers =[{lat: 30.287200799999997, lng: -97.7288768}]; //THIS DOES THE JOB OF 26
 
@@ -23,6 +24,16 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+
+            $("button").click(addLocation);
+
+            function addLocation() {
+              addMarker();
+              locationArr.push(pos);
+
+              console.log(locationArr);
+              console.log("the function ran");
+            }
 
             //Pushes geolocation coords to polygonCoords array in area readable format
             polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
@@ -84,20 +95,22 @@ function getArea() {
 }
 
 //GET PIN LOCATION AND ADD COORDIINATES TO AREA ARRAY
-function addToCompute(event) {
+function addToCompute(pos) {
     polygonCoords = poly.getPath();
-    polygonCoords.push(event.latLng)
+    polygonCoords.push(pos.latLng);
 };
 
 //DROP PIN AND DRAW LINE ON CLICK
-function addMarker(event) {
-    var path = poly.getPath();
+function addMarker(pos) {
+  // console.log("event.fa.x", event.fa.x);
+  // console.log("event.fa.y", event.fa.y);
     // Because path is an MVCArray, we can simply append a new coordinate
+    var path = poly.getPath();
     // and it will automatically appear.
-    path.push(event.latLng);
+    path.push(pos.latLng);
     // Add a new marker at the new plotted point on the polyline.
     var marker = new google.maps.Marker({
-        position: event.latLng,
+        position: pos.latLng,
         title: '#' + path.getLength(),
         map: map
     });
