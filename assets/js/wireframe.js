@@ -14,13 +14,37 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+// Initialize Variables
 
-var score=0;
+var score=770;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
 var scorearray=[];
 var highscorearray=[];
+var newscorearray=[];
+
+// Function to determine the correct order of the high scores
+function bubbleSort(arr) {
+  // everytime we iterate over the array, we know at least the last value has
+  // been sorted, so we don't have to iterate to that index again
+  var end = arr.length - 1;
+  // set flag to true, if we have to swap any values, the flag will be then set
+  // to false
+  sorted = true;
+  for (var i = 0; i < end; i++) {
+    // if the value of the current index is less than the next index, we know
+    // the list is not properly sorted and swap their positions.
+    if (arr[i] < arr[i + 1]) {
+      // we have to create a temporary variable to hold a value, so we can swap
+      // the values of the two positions
+      var temp = arr[i];
+      arr[i] = arr[i + 1];
+      arr[i + 1] = temp;
+      sorted = false;
+    }
+  }
+}
 
 // var map, infoWindow;
   // function initMap() {
@@ -107,15 +131,17 @@ function endgame(){
     //Output the score to the html IDs
     $("#score").text(score);
 
-if (score > scorearray[8]){
+// Assign the new score to the bottom core array if it is higher than the lowest in the list
+if (score > scorearray[8]){ 
 
-    // Get the modal
+scorearray[8]=score;
+    // Get the modal to enter the new user initials
 var modal = document.getElementById('myModal');
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal 
+
 
     modal.style.display = "block";
 
@@ -124,10 +150,11 @@ span.onclick = function() {
     modal.style.display = "none";
 }
 
-}
 
 }
 
+}
+// This code runs after the user submits his name
 
 $(".close").on("click", function(event) {
   event.preventDefault();
@@ -135,20 +162,63 @@ $(".close").on("click", function(event) {
   // Grabs new Highscorer initials
   var highscorer = $("#highscore-name-input").val().trim();
 
-console.log(highscorer);
+
 
 
   // // Creates local "temporary" object for holding new highscore data
   var newHigh = {
     name: highscorer,
-    score: score,
     place: currentPlace,
+    score: score,
     weathercond: currentCond
   };
 
-  // // Uploads highscore data to the database
-  database.ref().push(newHigh);
+// Sort the scorearray
+do {
+  bubbleSort(scorearray);
+} while (!sorted);
 
+
+var newindex=scorearray.indexOf(score);
+
+// Delete the lowest score of the old table
+highscorearray[8]=null;
+
+
+//Add the new hig score to the correct element of the array
+highscorearray.splice(newindex,0, newHigh);
+
+
+
+
+var table = document.getElementById("score-table");
+
+
+// Clear the old table in the HTML
+while(table.rows.length > 0) {
+  table.deleteRow(0);
+}
+
+for (var n=0; n<9; n++){
+  // // Uploads highscore data to the database
+newscorearray[n]=highscorearray[n];
+
+}
+
+// Reset the arrays
+
+scorearray=[];
+highscorearray=[];
+// Clear database ahead of a write
+
+database.ref().set(null);
+
+for (var j=0; j<9; j++){
+  // // Uploads highscore data to the database
+
+  database.ref().push(newscorearray[j]);
+
+}
 
 });
 
@@ -164,31 +234,17 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   var HighPlace = childSnapshot.val().place;
   var HighCond = childSnapshot.val().weathercond;
   
-  // var objectScore = {
-  //   highName: HighName,
-  //   highScore: HighScore,
-  //   highPlace: HighPlace,
-  //   highCond: HighCond
-  // }
+//Save the highscores to a local array
   highscorearray.push(childSnapshot.val());
   scorearray.push(childSnapshot.val().score);
 
-  console.log(scorearray);
-
-  // if(testing.length===9){
-  //   hello();
-  // }
-
-// console.log(childSnapshot.val().name);
 
   // Add each highscorer's data into the table
   $("#score-table > tbody").append("<tr><td>" + HighName + "</td><td>" + HighScore + "</td><td>" +
   HighPlace + "</td><td>" + HighCond + "</td><td>");
 });
 
-// function hello(){
-//   console.log(testing);
-// }
+
 function maingame(){
   console.log("start of game")
 
@@ -241,6 +297,7 @@ time=30;
       endgame();
     }
   }
+
 
 //Once the user is happy with the performance the submit button ends the game
       $("#submit").on("click", function() {    
