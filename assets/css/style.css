@@ -46,6 +46,10 @@ h1{
 #leaderboard{
     font-size: 30px;
     color: white;
+    border: solid;
+    border-color: grey;
+     border-radius:30px;
+
 }
 
 #submit{
