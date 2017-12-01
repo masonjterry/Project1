@@ -132,7 +132,7 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score=area;
+var score=0;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
@@ -181,6 +181,7 @@ function endgame(){
 	 $("#display").text("Over");
 
     //Output the score to the html IDs
+    score = area;
     $("#score").text(score);
 
 // Assign the new score to the bottom core array if it is higher than the lowest in the list
