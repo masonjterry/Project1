@@ -1,110 +1,59 @@
 var infoWindow;
 var map;
-
-var trail;
-
 var pos;
 var poly;
-
-var area;
-var locationArr = [];
 var polygonCoords = [];
-var polyMarkers =[{lat: 30.287200799999997, lng: -97.7288768}]; //THIS DOES THE JOB OF 26
+var polyMarkers = [];
+var weatherPos;
+var area;
 
 //FIND USER
 function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 18
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 20
     });
     infoWindow = new google.maps.InfoWindow;
 
     //GEOLOCATION
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            //Pushes geolocation coords to polygonCoords array in area readable format
-            polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
-
-    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat="+pos.lat+"&lon="+pos.lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
-
-    $.ajax({
-      url: weatherURL,
-      method: "GET"
-    }).done(function(response) {
-      var icon = "https://openweathermap.org/img/w/"+response.weather[0].icon+".png";
-      var iconImg = $("<img src=\""+icon+"\">");
-      var mainDiv = $("<div>").attr("id", "city");
-      var iconDiv = $("<div>").attr("id", "icon");
-      var tempDiv = $("<div>").attr("id", "temp");
-      $("#weather").append(mainDiv);
-      $("#city").append(response.name + ", " + response.sys.country);
-      $("#weather").append(iconDiv);
-      $("#icon").append(iconImg);
-      $("#weather").append(tempDiv);
-      $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
-    });
-
-            //Shows map over geolocation coordinates
-            infoWindow.setPosition(pos);
-            //infoWindow.setContent('Start');
-            //infoWindow.open(map);
-            map.setCenter(pos);
-            poly.setMap(map);
-        },
-        function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
+        getPos();
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-
-    // PINS AND POLYGONS
-    poly = new google.maps.Polygon({
-        paths: polyMarkers,
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35
-    });
-    poly.setMap(map);
-
     map.addListener('click', addMarker);
     map.addListener('click', addToCompute);
     map.addListener('click', getArea);
 };
 
-//COMPUTES AREA EVERY TIME A NEW PIN IS ADDED
-function getArea() {
-    area = google.maps.geometry.spherical.computeArea(polygonCoords);
-    console.log("area", Math.floor(area));
-}
+$("#button").on("click", function() {
+    getPos();
+    addMarker();
+    addToCompute();
+});
 
-//GET PIN LOCATION AND ADD COORDIINATES TO AREA ARRAY
-function addToCompute(event) {
-    polygonCoords = poly.getPath();
-    polygonCoords.push(event.latLng);
-};
-
-//DROP PIN AND DRAW LINE ON CLICK
-function addMarker(event) {
-  // console.log("event.fa.x", event.fa.x);
-  // console.log("event.fa.y", event.fa.y);
-    // Because path is an MVCArray, we can simply append a new coordinate
+//FUNCTIONS
+function addMarker() {
     var path = poly.getPath();
-    // and it will automatically appear.
-    path.push(event.latLng);
+        console.log(pos);
+    path.push(new google.maps.LatLng(pos));
     // Add a new marker at the new plotted point on the polyline.
     var marker = new google.maps.Marker({
-        position: event.latLng,
+        position: (new google.maps.LatLng(pos)),
         title: '#' + path.getLength(),
         map: map
     });
 };
+
+function addToCompute() {
+    polygonCoords = poly.getPath();
+    polygonCoords.push(new google.maps.LatLng(pos));
+};
+
+function getArea() {
+    area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    console.log(Math.floor(area));
+}
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -114,8 +63,68 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 };
 
-$(document).ready(function() {
+function getPos() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
 
+        var lat = pos.lat;
+        var lng = pos.lng;
+        var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
+
+        $.ajax({
+          url: weatherURL,
+          method: "GET"
+        }).done(function(response) {
+          currentCond=(response.weather[0].main);
+          currentPlace=(response.name);
+
+          var icon = "https://openweathermap.org/img/w/"+response.weather[0].icon+".png";
+          var iconImg = $("<img src=\""+icon+"\">");
+          var mainDiv = $("<div>").attr("id", "city");
+          var iconDiv = $("<div>").attr("id", "icon");
+          var tempDiv = $("<div>").attr("id", "temp");
+          $("#conditions").append(mainDiv);
+          $("#city").append(response.name + ", " + response.sys.country);
+          $("#conditions").append(iconDiv);
+          $("#icon").append(iconImg);
+          $("#conditions").append(tempDiv);
+          $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
+        });
+
+        polyMarkers.push(pos);
+
+        //Pushes geolocation coords to polygonCoords array in area readable format
+        polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
+
+        //Shows map over geolocation coordinates
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Start');
+        infoWindow.open(map);
+        map.setCenter(pos);
+
+        getArea();
+
+        poly = new google.maps.Polygon({
+            paths: polyMarkers,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35
+        });
+        poly.setMap(map);
+    },
+
+    function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+    });
+} 
+
+
+ $(document).ready(function() {
 
   var config = {
     apiKey: "AIzaSyBVKQZeo1H6cABaYb09pdm4Ez2ZXhhSY_A",
@@ -165,9 +174,9 @@ function bubbleSort(arr) {
 var clockRunning = false;
 var time=30;
 
-
 // funtion to finish the game gets called by either a timeout or a submit
 function endgame(){
+  score = area;
   // hide the questions
   $(".wrapper").addClass("hidden");
   //show the results by removing them from the hidden class
@@ -176,16 +185,28 @@ function endgame(){
   $(".reinit").removeClass("hidden");
 
       // Stop the counter
-	    clearInterval(intervalId);
+      clearInterval(intervalId);
     clockRunning = false;
-	 $("#display").text("Over");
+   $("#display").text("Over");
+
+var localhighscore=(localStorage.getItem("highscore"));
+console.log(localhighscore);
+
+if (localhighscore == null){
+  localhighscore=0;
+}
+
+if (score > localhighscore){
+         localStorage.setItem("highscore", score);
+}
+      // And display that name for the user using "localStorage.getItem"
+      $("#localhigh").text(localStorage.getItem("highscore"));
 
     //Output the score to the html IDs
-    score = area;
     $("#score").text(score);
 
 // Assign the new score to the bottom core array if it is higher than the lowest in the list
-if (score > scorearray[8]){
+if (score > scorearray[8]){ 
 
 scorearray[8]=score;
     // Get the modal to enter the new user initials
@@ -243,26 +264,20 @@ while(table.rows.length > 0) {
 for (var n=0; n<9; n++){
   // // Uploads highscore data to the database
 newscorearray[n]=highscorearray[n];
-
 }
 
 // Reset the arrays
-
 scorearray=[];
 highscorearray=[];
 // Clear database ahead of a write
-
 database.ref().set(null);
 
 for (var j=0; j<9; j++){
   // // Uploads highscore data to the database
 
   database.ref().push(newscorearray[j]);
-
 }
-
 });
-
 
 // 3. Create Firebase event for adding hignhscore to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
@@ -274,7 +289,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   var HighScore = childSnapshot.val().score;
   var HighPlace = childSnapshot.val().place;
   var HighCond = childSnapshot.val().weathercond;
-
+  
 //Save the highscores to a local array
   highscorearray.push(childSnapshot.val());
   scorearray.push(childSnapshot.val().score);
@@ -285,20 +300,47 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   HighPlace + "</td><td>" + HighCond + "</td><td>");
 });
 
-
 function maingame(){
   console.log("start of game")
 
 clockRunning = false;
 time=30;
+
+// Get the modal
+var modal = document.getElementById('instModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
  //Listen for the main click image to be pressed to initiate the game
-      $(".initiate").on("click", function() {
+      $(".initiate").on("click", function() {    
       // Remove the questions from the hidden class so that the user can see them
       $(".wrapper").removeClass("hidden");
       //Hide the initiation elements by adding them to the hidden class
       $(".initiate").addClass("hidden");
       $("#init").addClass("hidden");
       $("#weather").addClass("hidden");
+      $("#structions").addClass("hidden");
 
     //Setup the counter to count in seconds
     if (!clockRunning) {
@@ -310,17 +352,14 @@ time=30;
 
       });
 //This is the re-init function to restart the game.
-      $(".reinit").on("click", function() {
-
+      $(".reinit").on("click", function() {    
       $(".wrapper").removeClass("hidden");
       $(".initiate").addClass("hidden");
       $("#init").addClass("hidden");
       $(".reinit").addClass("hidden");
       $(".results").addClass("hidden");
 
-
 //Reset variables.
-
       clockRunning = false;
       time=30;
 
@@ -343,34 +382,13 @@ time=30;
 
 
 //Once the user is happy with the performance the submit button ends the game
-      $("#submit").on("click", function() {
+      $("#submit").on("click", function() {    
 endgame();
 
       });
-
 }
-
-
-
+     
 maingame();
 
-});
 
-function getUserLocation() {
-  navigator.geolocation.getCurrentPosition(function(position) {
-      pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-      };
-      console.log("pos", pos);
-      $('#location').html(
-        '<div style="color:white;text-align:center;"> lat: ' +
-          pos.lat +
-          ', lng: ' +
-          pos.lng +
-        '</div>'
-      );
-      //Pushes geolocation coords to polygonCoords array in area readable format
-      polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
-          });
-      };
+    });

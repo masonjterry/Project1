@@ -20,13 +20,29 @@
 </head>
 <body>
 
-	<!-- Row for the header -->
+  <!-- Row for the header -->
 <div class="row">
-	<div class ="col-lg-12">
-		<h1>StreetTron</h1>
-    <div id="location"></div>
-	</div>
+  <div class ="col-lg-12">
+    <h1>StreetTron</h1>
+  </div>
 </div>
+
+
+<div id=structions>
+<button id="myBtn">Instructions</button>
+</div>
+
+<!-- The Modal -->
+<div id="instModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>You have 60 seconds to run around your local area and encompass as much area as possible in the given time. But be sure to return to your original starting point!!!! Good luck!</p>
+  </div>
+
+</div>
+
 
 <div class="row">
   <div id="weather" class ="col-lg-12">
@@ -37,7 +53,7 @@
 <div class ="row">
 <div  class="col-lg-12 initiate">
 
-	<img id="logo" src="assets/images/bike2.jpg">;
+  <img id="logo" src="assets/images/bike2.jpg">;
 
 </div>
 </div>
@@ -45,45 +61,46 @@
 <div class ="row">
 <div id="init" class="col-lg-12">
 
-	Click to Begin
+  Click to Begin
 
 </div>
 </div>
 <!-- Create a wrapper for the main game -->
 <section class="wrapper hidden">
-<!-- 	Row for the time remaining -->
+<!--  Row for the time remaining -->
 <div class="row">
-	<div id="timeleft" class ="col-lg-12">
-		<h3>Time Remaining: <span id="display"></span></h3>
-	</div>
+  <div id="timeleft" class ="col-lg-12">
+    <h3>Time Remaining: <span id="display"></span></h3>
+  </div>
 </div>
 <!-- Rows for-->
 <div class="row">
-	<div class ="col-lg-12">
-		<h2>Run Now</h2>
-	</div>
+  <div class ="col-lg-12">
+    <h2>Run Now</h2>
+  </div>
 </div>
 
   <div class ="row">
-  	<div class="col-lg-2">
-  	</div>
+    <div class="col-lg-2">
+    </div>
 
 
 <div id="map" class = "col-lg-8 mapimage">
-  <!-- <img id="logo" src="assets/images/austinmap.jpg">; -->
+<!--   <img id="logo" src="assets/images/austinmap.jpg"> -->;
 </div>
-  	<div class="col-lg-2">
-  	</div>
+    <div class="col-lg-2">
+    </div>
 </div>
 <br><br>
 
 
 <div class="row">
-	<div class="col-lg-4"></div>
-	<div id="submit" class="col-lg-4">
-		Finish battle
-	</div>
-	<div class="col-lg-4"></div>
+  <div class="col-lg-4"></div>
+  <button id="button">location finder button</button>
+  <div id="submit" class="col-lg-4">
+    Finish battle
+  </div>
+  <div class="col-lg-4"></div>
 
 </div>
 </section>
@@ -96,9 +113,23 @@
 <div id="right" class = "col-lg-6 results">
   Score:  <span id="score"></span>
 </div>
-
 <div class = "col-lg-3"></div>
 </div>
+
+<div class="row">
+<div class = "col-lg-3"></div>
+
+<div id="localscore" class = "col-lg-6">
+  Your high Score:  <span id="localhigh"></span>
+</div>
+<div class = "col-lg-3"></div>
+</div>
+
+<!-- <div  id="localscore" class = "col-lg-3">
+Your high Score:  <span id="localhigh"></span>
+</div> -->
+
+
 
 <div class="row">
   <div class="col-lg-3">
@@ -133,30 +164,34 @@
   <div class="modal-content">
     <span class="close">Submit</span>
  <form>
-    <div class="form-group">
-      <label for="highscore-name-input">New Highscorer Name</label>
-      <input class="form-control" id="highscore-name-input" type="text">
-    </div>
-  </form>
 
+                <div class="form-group">
+                  <label for="highscore-name-input">New Highscorer Name</label>
+                  <input class="form-control" id="highscore-name-input" type="text">
+                </div>
+                </form>
   </div>
 
 </div>
 <!-- Hide the restart assets until the game is over -->
-	<div class="reinit hidden">
+  <div class="reinit hidden">
+
+
 
 <div class="row">
 
-	<div class="col-lg-4"></div>
-	<div class="col-lg-4">Click to Play again</div>
-	<div class="col-lg-4"></div>
+  <div class="col-lg-4"></div>
+  <div class="col-lg-4">Click to Play again</div>
+  <div class="col-lg-4"></div>
 </div>
 
 </div>
+
 
 <br><br>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiD1HSCXAZHrbl9RhjsZWzxD4vvOcTo3o&libraries=geometry&callback=initMap" async defer></script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtkhA1IAVN1EubX5cCU1pytpjx5CxMpfE&libraries=geometry&callback=initMap"></script>
 
 <script type="text/javascript" src="assets/js/MasonWireframe.js"></script>
 </body>
