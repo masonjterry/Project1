@@ -1,6 +1,5 @@
 var infoWindow;
 var map;
-var trail;
 var pos;
 var poly;
 var polygonCoords = [];
@@ -97,3 +96,4 @@ function getPos() {
         handleLocationError(true, infoWindow, map.getCenter());
     });
 }
+
