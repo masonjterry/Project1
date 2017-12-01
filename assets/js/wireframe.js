@@ -5,6 +5,7 @@ var trail;
 
 var pos;
 var poly;
+var area;
 
 var locationArr = [];
 var polygonCoords = [];
@@ -79,8 +80,8 @@ function initMap() {
 
 //COMPUTES AREA EVERY TIME A NEW PIN IS ADDED
 function getArea() {
-    var area = google.maps.geometry.spherical.computeArea(polygonCoords);
-    console.log(area);
+    area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    console.log(Math.floor(area));
 }
 
 //GET PIN LOCATION AND ADD COORDIINATES TO AREA ARRAY
@@ -91,6 +92,7 @@ function addToCompute(event) {
 
 //DROP PIN AND DRAW LINE ON CLICK
 function addMarker(event) {
+  console.log("pos", polygonCoords);
   // console.log("event.fa.x", event.fa.x);
   // console.log("event.fa.y", event.fa.y);
     // Because path is an MVCArray, we can simply append a new coordinate
@@ -131,13 +133,13 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score=770;
-var currentTemp=0;
-var currentCond="";
-var currentPlace="";
-var scorearray=[];
-var highscorearray=[];
-var newscorearray=[];
+var score = area;
+var currentTemp = 0;
+var currentCond = "";
+var currentPlace = "";
+var scorearray = [];
+var highscorearray = [];
+var newscorearray = [];
 
 // Function to determine the correct order of the high scores
 function bubbleSort(arr) {
