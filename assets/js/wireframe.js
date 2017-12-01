@@ -36,7 +36,6 @@ $("#button").on("click", function() {
 //FUNCTIONS
 function addMarker() {
     var path = poly.getPath();
-        console.log(pos);
     path.push(new google.maps.LatLng(pos));
     // Add a new marker at the new plotted point on the polyline.
     var marker = new google.maps.Marker({
@@ -53,7 +52,6 @@ function addToCompute() {
 
 function getArea() {
     area = google.maps.geometry.spherical.computeArea(polygonCoords);
-    console.log(Math.floor(area));
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -102,7 +100,6 @@ function getPos() {
         }
 
         function getLocation() {
-          console.log("I am working");
           getPos();
           addMarker();
           addToCompute();
@@ -297,8 +294,6 @@ for (var j=0; j<9; j++){
 // 3. Create Firebase event for adding hignhscore to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
-  console.log(childSnapshot.val());
-
   // Store everything into a variable.
   var HighName = childSnapshot.val().name;
   var HighScore = childSnapshot.val().score;
@@ -316,7 +311,6 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 });
 
 function maingame(){
-  console.log("start of game")
 
 clockRunning = false;
 time=30;
