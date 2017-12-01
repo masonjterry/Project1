@@ -5,7 +5,6 @@ var trail;
 
 var pos;
 var poly;
-var area;
 
 var locationArr = [];
 var polygonCoords = [];
@@ -80,8 +79,8 @@ function initMap() {
 
 //COMPUTES AREA EVERY TIME A NEW PIN IS ADDED
 function getArea() {
-    area = google.maps.geometry.spherical.computeArea(polygonCoords);
-    console.log(Math.floor(area));
+    var area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    console.log(area);
 }
 
 //GET PIN LOCATION AND ADD COORDIINATES TO AREA ARRAY
@@ -92,7 +91,6 @@ function addToCompute(event) {
 
 //DROP PIN AND DRAW LINE ON CLICK
 function addMarker(event) {
-  console.log("pos", polygonCoords);
   // console.log("event.fa.x", event.fa.x);
   // console.log("event.fa.y", event.fa.y);
     // Because path is an MVCArray, we can simply append a new coordinate
@@ -133,13 +131,13 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score = area;
-var currentTemp = 0;
-var currentCond = "";
-var currentPlace = "";
-var scorearray = [];
-var highscorearray = [];
-var newscorearray = [];
+var score=770;
+var currentTemp=0;
+var currentCond="";
+var currentPlace="";
+var scorearray=[];
+var highscorearray=[];
+var newscorearray=[];
 
 // Function to determine the correct order of the high scores
 function bubbleSort(arr) {
@@ -304,6 +302,15 @@ time=30;
     if (!clockRunning) {
         intervalId = setInterval(count, 1000);
         clockRunning = true;
+
+
+
+        console.log(2);
+        setInterval(function() {
+           getUserLocation();
+        }, 1000);
+
+
     }
 
       });
@@ -326,8 +333,15 @@ time=30;
     if (!clockRunning) {
         intervalId = setInterval(count, 1000);
         clockRunning = true;
-    }
 
+
+
+
+
+        console.log(1);
+
+
+    }
       });
 
 //Counting function...run the endgame function when the time reaches 0
@@ -353,3 +367,30 @@ endgame();
 maingame();
 
 });
+
+/*
+  1. create a function that gets users location
+  2. create interval to run function above
+    a. insert users location into an array
+  3. at end of 30 seconds calculate distance
+*/
+
+function getUserLocation() {
+  //console.log('b4');
+  navigator.geolocation.getCurrentPosition(function(position) {
+      pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+      };
+      console.log('pos', pos);
+      $('#location').html(
+        '<div style="color:white;text-align:center;"> lat: ' +
+          pos.lat +
+          ', lng: ' +
+          pos.lng +
+        '</div>'
+      );
+      //Pushes geolocation coords to polygonCoords array in area readable format
+      //polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
+    });
+}
