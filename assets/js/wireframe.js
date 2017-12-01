@@ -6,6 +6,7 @@ var trail;
 var pos;
 var poly;
 
+var area;
 var locationArr = [];
 var polygonCoords = [];
 var polyMarkers =[{lat: 30.287200799999997, lng: -97.7288768}]; //THIS DOES THE JOB OF 26
@@ -79,7 +80,7 @@ function initMap() {
 
 //COMPUTES AREA EVERY TIME A NEW PIN IS ADDED
 function getArea() {
-    var area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    area = Math.floor(google.maps.geometry.spherical.computeArea(polygonCoords));
     console.log(area);
 }
 
@@ -131,7 +132,7 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score=770;
+var score;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
@@ -180,6 +181,7 @@ function endgame(){
 	 $("#display").text("Over");
 
     //Output the score to the html IDs
+    score = area;
     $("#score").text(score);
 
 // Assign the new score to the bottom core array if it is higher than the lowest in the list
@@ -330,6 +332,7 @@ time=30;
 
 //Counting function...run the endgame function when the time reaches 0
     function count() {
+    getUserLocation();
     time--;
     $("#display").text(time);
     if (time==0){
@@ -351,3 +354,22 @@ endgame();
 maingame();
 
 });
+
+function getUserLocation() {
+  navigator.geolocation.getCurrentPosition(function(position) {
+      pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+      };
+      console.log("pos", pos);
+      $('#location').html(
+        '<div style="color:white;text-align:center;"> lat: ' +
+          pos.lat +
+          ', lng: ' +
+          pos.lng +
+        '</div>'
+      );
+      //Pushes geolocation coords to polygonCoords array in area readable format
+      polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
+          });
+      };
