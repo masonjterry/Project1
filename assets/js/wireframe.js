@@ -16,7 +16,7 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score=770;
+var score=750;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
@@ -127,6 +127,19 @@ function endgame(){
 	    clearInterval(intervalId);
     clockRunning = false;
 	 $("#display").text("Over");
+
+var localhighscore=(localStorage.getItem("highscore"));
+console.log(localhighscore);
+
+if (localhighscore == null){
+  localhighscore=0;
+}
+
+if (score > localhighscore){
+         localStorage.setItem("highscore", score);
+}
+      // And display that name for the user using "localStorage.getItem"
+      $("#localhigh").text(localStorage.getItem("highscore"));
 
     //Output the score to the html IDs
     $("#score").text(score);
@@ -250,6 +263,36 @@ function maingame(){
 
 clockRunning = false;
 time=30;
+
+
+// Get the modal
+var modal = document.getElementById('instModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+
  //Listen for the main click image to be pressed to initiate the game
       $(".initiate").on("click", function() {    
       // Remove the questions from the hidden class so that the user can see them
@@ -258,6 +301,7 @@ time=30;
       $(".initiate").addClass("hidden");
       $("#init").addClass("hidden");
       $("#weather").addClass("hidden");
+      $("#structions").addClass("hidden");
 
     //Setup the counter to count in seconds
     if (!clockRunning) {
