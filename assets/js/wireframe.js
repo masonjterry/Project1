@@ -6,6 +6,7 @@ var trail;
 var pos;
 var poly;
 
+var area;
 var locationArr = [];
 var polygonCoords = [];
 var polyMarkers =[{lat: 30.287200799999997, lng: -97.7288768}]; //THIS DOES THE JOB OF 26
@@ -79,8 +80,8 @@ function initMap() {
 
 //COMPUTES AREA EVERY TIME A NEW PIN IS ADDED
 function getArea() {
-    var area = google.maps.geometry.spherical.computeArea(polygonCoords);
-    console.log(area);
+    area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    console.log("area", Math.floor(area));
 }
 
 //GET PIN LOCATION AND ADD COORDIINATES TO AREA ARRAY
@@ -131,7 +132,7 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score=770;
+var score=area;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
@@ -304,13 +305,6 @@ time=30;
         clockRunning = true;
 
 
-
-        console.log(2);
-        setInterval(function() {
-           getUserLocation();
-        }, 1000);
-
-
     }
 
       });
@@ -333,20 +327,13 @@ time=30;
     if (!clockRunning) {
         intervalId = setInterval(count, 1000);
         clockRunning = true;
-
-
-
-
-
-        console.log(1);
-
-
     }
       });
 
 //Counting function...run the endgame function when the time reaches 0
     function count() {
     time--;
+    getUserLocation();
     $("#display").text(time);
     if (time==0){
       endgame();
@@ -368,21 +355,13 @@ maingame();
 
 });
 
-/*
-  1. create a function that gets users location
-  2. create interval to run function above
-    a. insert users location into an array
-  3. at end of 30 seconds calculate distance
-*/
-
 function getUserLocation() {
-  //console.log('b4');
   navigator.geolocation.getCurrentPosition(function(position) {
       pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
       };
-      console.log('pos', pos);
+      console.log("pos", pos);
       $('#location').html(
         '<div style="color:white;text-align:center;"> lat: ' +
           pos.lat +
@@ -391,6 +370,6 @@ function getUserLocation() {
         '</div>'
       );
       //Pushes geolocation coords to polygonCoords array in area readable format
-      //polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
-    });
-}
+      polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
+          });
+      };
