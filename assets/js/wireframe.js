@@ -103,6 +103,7 @@ function getPos() {
           getPos();
           addMarker();
           addToCompute();
+          console.log("I am working");
         }
 
         polyMarkers.push(pos);
@@ -202,7 +203,6 @@ function endgame(){
    $("#display").text("Over");
 
 var localhighscore=(localStorage.getItem("highscore"));
-console.log(localhighscore);
 
 if (localhighscore == null){
   localhighscore=0;
