@@ -97,19 +97,3 @@ function getPos() {
         handleLocationError(true, infoWindow, map.getCenter());
     });
 }    
-// //COORDIINATES TO AREA ARRAY
-// function addToCompute(event) {
-//     polygonCoords = poly.getPath();
-//     polygonCoords.push(pos);
-// }
-
-// function addMarker(event) {
-//     var path = poly.getPath();
-//     path.push(event.latLng);
-
-//     var marker = new google.maps.Marker({
-//         position: pos,
-//         title: "#" + path.getLength(),
-//         map: map
-//     })
-// }
