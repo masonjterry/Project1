@@ -8,14 +8,55 @@ var polyMarkers = [];
 
 //FIND USER
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), { 
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 20
     });
     infoWindow = new google.maps.InfoWindow;
-    
-    //GEOLOCATION 
+
+    //GEOLOCATION
     if (navigator.geolocation) {
+<<<<<<< HEAD
         getPos();
+=======
+        navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            //Pushes geolocation coords to polygonCoords array in area readable format
+            polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
+
+    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat="+pos.lat+"&lon="+pos.lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
+
+    $.ajax({
+      url: weatherURL,
+      method: "GET"
+    }).done(function(response) {
+      var icon = "http://openweathermap.org/img/w/"+response.weather[0].icon+".png";
+      var iconImg = $("<img src=\""+icon+"\">");
+      var mainDiv = $("<div>").attr("id", "city");
+      var iconDiv = $("<div>").attr("id", "icon");
+      var tempDiv = $("<div>").attr("id", "temp");
+      $("#weather").append(mainDiv);
+      $("#city").append(response.name + ", " + response.sys.country);
+      $("#weather").append(iconDiv);
+      $("#icon").append(iconImg);
+      $("#weather").append(tempDiv);
+      $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
+    });
+
+            //Shows map over geolocation coordinates
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Start');
+            infoWindow.open(map);
+            map.setCenter(pos);
+            poly.setMap(map);
+        },
+        function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+>>>>>>> a28c728b075f2917f0587dd645736e023dbb69e3
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
@@ -25,6 +66,7 @@ function initMap() {
     map.addListener('click', getArea);
 };
 
+<<<<<<< HEAD
 $("#button").on("click", function() {
     getPos();
     addMarker();
@@ -33,6 +75,22 @@ $("#button").on("click", function() {
     
 //FUNCTIONS
 function addMarker() {
+=======
+//COMPUTES AREA EVERY TIME A NEW PIN IS ADDED
+function getArea() {
+    var area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    console.log(area);
+}
+
+//GET PIN LOCATION AND ADD COORDIINATES TO AREA ARRAY
+function addToCompute(event) {
+    polygonCoords = poly.getPath();
+    polygonCoords.push(event.latLng)
+};
+
+//DROP PIN AND DRAW LINE ON CLICK
+function addMarker(event) {
+>>>>>>> a28c728b075f2917f0587dd645736e023dbb69e3
     var path = poly.getPath();
         console.log(pos);
     path.push(new google.maps.LatLng(pos));
@@ -41,7 +99,7 @@ function addMarker() {
         position: (new google.maps.LatLng(pos)),
         title: '#' + path.getLength(),
         map: map
-    }); 
+    });
 };
 
 function addToCompute() {
@@ -61,6 +119,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
 };
+<<<<<<< HEAD
 
 function getPos() {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -113,3 +172,5 @@ function getPos() {
 //         map: map
 //     })
 // }
+=======
+>>>>>>> a28c728b075f2917f0587dd645736e023dbb69e3
