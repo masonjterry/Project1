@@ -80,8 +80,8 @@ function initMap() {
 
 //COMPUTES AREA EVERY TIME A NEW PIN IS ADDED
 function getArea() {
-    area = google.maps.geometry.spherical.computeArea(polygonCoords);
-    console.log("area", Math.floor(area));
+    area = Math.floor(google.maps.geometry.spherical.computeArea(polygonCoords));
+    console.log(area);
 }
 
 //GET PIN LOCATION AND ADD COORDIINATES TO AREA ARRAY
@@ -132,7 +132,7 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score=0;
+var score;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
@@ -304,8 +304,6 @@ time=30;
     if (!clockRunning) {
         intervalId = setInterval(count, 1000);
         clockRunning = true;
-
-
     }
 
       });
@@ -329,12 +327,13 @@ time=30;
         intervalId = setInterval(count, 1000);
         clockRunning = true;
     }
+
       });
 
 //Counting function...run the endgame function when the time reaches 0
     function count() {
-    time--;
     getUserLocation();
+    time--;
     $("#display").text(time);
     if (time==0){
       endgame();
