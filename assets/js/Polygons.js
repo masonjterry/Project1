@@ -1,73 +1,58 @@
-var poly;
+var infoWindow;
 var map;
-var infoWindow
+var trail;
+var pos;
+var poly;
+var polygonCoords = [];
+var polyMarkers = [];
 
-// Define the LatLng coordinates for the polygon's path.
-var polygonCoords = [
-    {lat: 30.2870379, lng: -97.7313409}
-];
-
-//find user location
+//FIND USER
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 30.2870379, lng: -97.7313409},
-        zoom: 17
-	});
-	infoWindow = new google.maps.InfoWindow;
-
-	//GEOLOCATION 
+    map = new google.maps.Map(document.getElementById('map'), { 
+        zoom: 20
+    });
+    infoWindow = new google.maps.InfoWindow;
+    
+    //GEOLOCATION 
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-        	pos = {
-            	lat: position.coords.latitude,
-            	lng: position.coords.longitude
-        	};
-
-        	infoWindow.setPosition(pos);
-        	infoWindow.setContent('Location found.');
-        	infoWindow.open(map);
-        	map.setCenter(pos);
-    	}, 
-
-    	function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-
+        getPos();
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-
-    // PINS AND POLYGONS
-    poly = new google.maps.Polygon({
-        paths: polygonCoords,
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35
-    });
-    poly.setMap(map);
-
-	map.addListener('click', addLatLng);
+    map.addListener('click', addMarker);
+    map.addListener('click', addToCompute);
+    map.addListener('click', getArea);
 };
 
-
-//DROP PIN AND DRAW LINE ON CLICK
-function addLatLng(event) {
+$("#button").on("click", function() {
+    getPos();
+    addMarker();
+    addToCompute();
+});
+    
+//FUNCTIONS
+function addMarker() {
     var path = poly.getPath();
-
-    // Because path is an MVCArray, we can simply append a new coordinate
-    // and it will automatically appear.
-    path.push(event.latLng);
-
+        console.log(pos);
+    path.push(new google.maps.LatLng(pos));
     // Add a new marker at the new plotted point on the polyline.
     var marker = new google.maps.Marker({
-    	position: event.latLng,
+        position: (new google.maps.LatLng(pos)),
         title: '#' + path.getLength(),
         map: map
-    });
+    }); 
 };
+
+function addToCompute() {
+    polygonCoords = poly.getPath();
+    polygonCoords.push(new google.maps.LatLng(pos));
+};
+
+function getArea() {
+    var area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    console.log(Math.floor(area));
+}
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -76,3 +61,55 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
 };
+
+function getPos() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+
+        polyMarkers.push(pos);
+     
+        //Pushes geolocation coords to polygonCoords array in area readable format
+        polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
+
+        //Shows map over geolocation coordinates
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Start');
+        infoWindow.open(map);
+        map.setCenter(pos);
+
+        getArea();
+
+        poly = new google.maps.Polygon({
+            paths: polyMarkers,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35
+        });
+        poly.setMap(map);
+    }, 
+
+    function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+    });
+}    
+// //COORDIINATES TO AREA ARRAY
+// function addToCompute(event) {
+//     polygonCoords = poly.getPath();
+//     polygonCoords.push(pos);
+// }
+
+// function addMarker(event) {
+//     var path = poly.getPath();
+//     path.push(event.latLng);
+
+//     var marker = new google.maps.Marker({
+//         position: pos,
+//         title: "#" + path.getLength(),
+//         map: map
+//     })
+// }
