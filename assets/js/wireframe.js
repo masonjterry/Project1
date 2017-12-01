@@ -185,9 +185,9 @@ function endgame(){
   $(".reinit").removeClass("hidden");
 
       // Stop the counter
-	    clearInterval(intervalId);
+      clearInterval(intervalId);
     clockRunning = false;
-	 $("#display").text("Over");
+   $("#display").text("Over");
 
 var localhighscore=(localStorage.getItem("highscore"));
 console.log(localhighscore);
