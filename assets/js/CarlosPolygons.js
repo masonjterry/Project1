@@ -1,6 +1,5 @@
 var infoWindow;
 var map;
-var trail;
 var pos;
 var poly;
 var polygonCoords = [];
@@ -8,12 +7,12 @@ var polyMarkers = [];
 
 //FIND USER
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), { 
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 20
     });
     infoWindow = new google.maps.InfoWindow;
-    
-    //GEOLOCATION 
+
+    //GEOLOCATION
     if (navigator.geolocation) {
         getPos();
     } else {
@@ -30,7 +29,7 @@ $("#button").on("click", function() {
     addMarker();
     addToCompute();
 });
-    
+
 //FUNCTIONS
 function addMarker() {
     var path = poly.getPath();
@@ -41,7 +40,7 @@ function addMarker() {
         position: (new google.maps.LatLng(pos)),
         title: '#' + path.getLength(),
         map: map
-    }); 
+    });
 };
 
 function addToCompute() {
@@ -70,7 +69,7 @@ function getPos() {
         };
 
         polyMarkers.push(pos);
-     
+
         //Pushes geolocation coords to polygonCoords array in area readable format
         polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
 
@@ -91,9 +90,10 @@ function getPos() {
             fillOpacity: 0.35
         });
         poly.setMap(map);
-    }, 
+    },
 
     function() {
         handleLocationError(true, infoWindow, map.getCenter());
     });
-}    
+}
+
