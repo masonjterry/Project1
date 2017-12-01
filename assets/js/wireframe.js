@@ -1,5 +1,130 @@
- $(document).ready(function() {
+var infoWindow;
+var map;
+var pos;
+var poly;
+var polygonCoords = [];
+var polyMarkers = [];
+var weatherPos;
+var area;
 
+//FIND USER
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 20
+    });
+    infoWindow = new google.maps.InfoWindow;
+
+    //GEOLOCATION
+    if (navigator.geolocation) {
+        getPos();
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+    map.addListener('click', addMarker);
+    map.addListener('click', addToCompute);
+    map.addListener('click', getArea);
+};
+
+$("#button").on("click", function() {
+    getPos();
+    addMarker();
+    addToCompute();
+});
+
+//FUNCTIONS
+function addMarker() {
+    var path = poly.getPath();
+        console.log(pos);
+    path.push(new google.maps.LatLng(pos));
+    // Add a new marker at the new plotted point on the polyline.
+    var marker = new google.maps.Marker({
+        position: (new google.maps.LatLng(pos)),
+        title: '#' + path.getLength(),
+        map: map
+    });
+};
+
+function addToCompute() {
+    polygonCoords = poly.getPath();
+    polygonCoords.push(new google.maps.LatLng(pos));
+};
+
+function getArea() {
+    area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    console.log(Math.floor(area));
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+};
+
+function getPos() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+
+        var lat = pos.lat;
+        var lng = pos.lng;
+        var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
+
+        $.ajax({
+          url: weatherURL,
+          method: "GET"
+        }).done(function(response) {
+          currentCond=(response.weather[0].main);
+          currentPlace=(response.name);
+
+          var icon = "https://openweathermap.org/img/w/"+response.weather[0].icon+".png";
+          var iconImg = $("<img src=\""+icon+"\">");
+          var mainDiv = $("<div>").attr("id", "city");
+          var iconDiv = $("<div>").attr("id", "icon");
+          var tempDiv = $("<div>").attr("id", "temp");
+          $("#conditions").append(mainDiv);
+          $("#city").append(response.name + ", " + response.sys.country);
+          $("#conditions").append(iconDiv);
+          $("#icon").append(iconImg);
+          $("#conditions").append(tempDiv);
+          $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
+        });
+
+        polyMarkers.push(pos);
+
+        //Pushes geolocation coords to polygonCoords array in area readable format
+        polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
+
+        //Shows map over geolocation coordinates
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Start');
+        infoWindow.open(map);
+        map.setCenter(pos);
+
+        getArea();
+
+        poly = new google.maps.Polygon({
+            paths: polyMarkers,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35
+        });
+        poly.setMap(map);
+    },
+
+    function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+    });
+} 
+
+
+ $(document).ready(function() {
 
   var config = {
     apiKey: "AIzaSyBVKQZeo1H6cABaYb09pdm4Ez2ZXhhSY_A",
@@ -16,7 +141,7 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score=750;
+var score;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
@@ -46,76 +171,12 @@ function bubbleSort(arr) {
   }
 }
 
-// var map, infoWindow;
-  // function initMap() {
-   //  map = new google.maps.Map(document.getElementById('map'), {
-   //    center: {lat: 30.267153, lng: -97.7430608},
-   //    zoom: 18
-   //  });
-   //  infoWindow = new google.maps.InfoWindow;
-
-   // if (navigator.geolocation) {
-   //    navigator.geolocation.getCurrentPosition(function(position) {
-   //      var pos = {
-   //        lat: position.coords.latitude,
-   //        lng: position.coords.longitude
-   //      };
-var lat=30.26715;
-var lng=-97.7430608;
-       var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
-
-       $.ajax({
-          url: weatherURL,
-          method: "GET"
-        }).done(function(response) {
-
-          currentCond=(response.weather[0].main);
-          currentPlace=(response.name);
-
-          var icon = "http://openweathermap.org/img/w/"+response.weather[0].icon+".png";
-          var iconImg = $("<img src=\""+icon+"\">");
-          var mainDiv = $("<div>").attr("id", "city");
-          var iconDiv = $("<div>").attr("id", "icon");
-          var tempDiv = $("<div>").attr("id", "temp");
-          $("#conditions").append(mainDiv);
-          $("#city").append(response.name + ", " + response.sys.country);
-          $("#conditions").append(iconDiv);
-          $("#icon").append(iconImg);
-          $("#conditions").append(tempDiv);
-          $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
-        });
-
-        // console.log(response.name);
-        // currentTemp=(response.main.temp * 9/5 - 459.67);
- //       infoWindow.setPosition(pos);
- //        infoWindow.setContent('Location found.');
- //        infoWindow.open(map);
- //        map.setCenter(pos);
- //      }, function() {
- //        handleLocationError(true, infoWindow, map.getCenter());
- //      });
- //    } else {
- //      // If Browser doesn't support Geolocation
- //      handleLocationError(false, infoWindow, map.getCenter());
- //    }
- //  }
-
- // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
- //    infoWindow.setPosition(pos);
- //    infoWindow.setContent(browserHasGeolocation ?
- //                          'Error: The Geolocation service failed.' :
- //                          'Error: Your browser doesn\'t support geolocation.');
- //    infoWindow.open(map);
- //  // }
-
-
-
 var clockRunning = false;
 var time=30;
 
-
 // funtion to finish the game gets called by either a timeout or a submit
 function endgame(){
+  score = area;
   // hide the questions
   $(".wrapper").addClass("hidden");
   //show the results by removing them from the hidden class
@@ -154,15 +215,12 @@ var modal = document.getElementById('myModal');
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-
-
     modal.style.display = "block";
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
 }
-
 
 }
 
@@ -174,9 +232,6 @@ $(".close").on("click", function(event) {
 
   // Grabs new Highscorer initials
   var highscorer = $("#highscore-name-input").val().trim();
-
-
-
 
   // // Creates local "temporary" object for holding new highscore data
   var newHigh = {
@@ -191,21 +246,15 @@ do {
   bubbleSort(scorearray);
 } while (!sorted);
 
-
 var newindex=scorearray.indexOf(score);
 
 // Delete the lowest score of the old table
 highscorearray[8]=null;
 
-
 //Add the new hig score to the correct element of the array
 highscorearray.splice(newindex,0, newHigh);
 
-
-
-
 var table = document.getElementById("score-table");
-
 
 // Clear the old table in the HTML
 while(table.rows.length > 0) {
@@ -215,26 +264,20 @@ while(table.rows.length > 0) {
 for (var n=0; n<9; n++){
   // // Uploads highscore data to the database
 newscorearray[n]=highscorearray[n];
-
 }
 
 // Reset the arrays
-
 scorearray=[];
 highscorearray=[];
 // Clear database ahead of a write
-
 database.ref().set(null);
 
 for (var j=0; j<9; j++){
   // // Uploads highscore data to the database
 
   database.ref().push(newscorearray[j]);
-
 }
-
 });
-
 
 // 3. Create Firebase event for adding hignhscore to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
@@ -257,13 +300,11 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   HighPlace + "</td><td>" + HighCond + "</td><td>");
 });
 
-
 function maingame(){
   console.log("start of game")
 
 clockRunning = false;
 time=30;
-
 
 // Get the modal
 var modal = document.getElementById('instModal');
@@ -291,8 +332,6 @@ window.onclick = function(event) {
     }
 }
 
-
-
  //Listen for the main click image to be pressed to initiate the game
       $(".initiate").on("click", function() {    
       // Remove the questions from the hidden class so that the user can see them
@@ -312,16 +351,13 @@ window.onclick = function(event) {
       });
 //This is the re-init function to restart the game.
       $(".reinit").on("click", function() {    
-
       $(".wrapper").removeClass("hidden");
       $(".initiate").addClass("hidden");
       $("#init").addClass("hidden");
       $(".reinit").addClass("hidden");
       $(".results").addClass("hidden");
 
-
 //Reset variables.
-
       clockRunning = false;
       time=30;
 
@@ -330,7 +366,6 @@ window.onclick = function(event) {
         intervalId = setInterval(count, 1000);
         clockRunning = true;
     }
-
       });
 
 //Counting function...run the endgame function when the time reaches 0
@@ -348,11 +383,8 @@ window.onclick = function(event) {
 endgame();
 
       });
-
 }
      
-
-
 maingame();
 
 

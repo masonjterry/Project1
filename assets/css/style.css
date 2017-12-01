@@ -2,13 +2,13 @@
 * {
     box-sizing: border-box;
 }
+
 body {
     font-family: 'Orbitron', sans-serif;
     background-image: url("../images/tronback.jpg");
     /*color: white;*/
-
-
 }
+
 p{
     padding:5px;
     color: black;
@@ -28,14 +28,12 @@ h1{
     text-align: center;
 }
 
-
-
-.mapimage{
+#map{
     text-align: center;
     font-size: 20px;
     border-radius: 10px;
-
-
+    height: 500px;
+    width: 500px;
 }
 
 #timeleft{
@@ -51,8 +49,6 @@ h1{
      border-radius:30px;
      background: black;
      opacity: 0.8;
-
-
 }
 
 #submit{
@@ -60,32 +56,35 @@ h1{
     background-color: green;
     font-size: 40px;
     border-radius:10px;
-
 }
+
 .results{
     font-size: 50px;
     text-align: center;
     padding-bottom: 10px;
-
 }
+
 #right{
     color:green;
 }
+
 #notright{
     color:red;
 }
+
 .hidden{
     display:none;
 }
-#logo{
 
+#logo{
     text-align: center;
     height: 300px;
     border-radius: 30px;
-border:solid;
-border-color: grey;
+    border:solid;
+    border-color: grey;
 
 }
+
 #myBtn{
     background-color: grey;
 }
@@ -114,14 +113,10 @@ border-color: grey;
     text-align: center;
 }
 
-
 ol { 
    list-style-type: decimal; 
    list-style-position: inside;
    margin-left: 15px; 
-}
-#weather{
-/*border:solid;*/
 }
 
 .modal {
