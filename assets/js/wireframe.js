@@ -22,20 +22,25 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-    map.addListener('click', addMarker);
-    map.addListener('click', addToCompute);
-    map.addListener('click', getArea);
-};
 
-$("#button").on("click", function() {
-    getPos();
-    addMarker();
-    addToCompute();
-});
+    $("#logo").on("click", getNewPos);
+
+        function getNewPos() {
+          posInterval = setInterval(getLocation, 5000);
+        }
+
+        function getLocation() {
+          console.log("I am working");
+          getPos();
+          addMarker();
+          addToCompute();
+        }
+};
 
 //FUNCTIONS
 function addMarker() {
     var path = poly.getPath();
+        console.log(pos);
     path.push(new google.maps.LatLng(pos));
     // Add a new marker at the new plotted point on the polyline.
     var marker = new google.maps.Marker({
@@ -52,6 +57,7 @@ function addToCompute() {
 
 function getArea() {
     area = google.maps.geometry.spherical.computeArea(polygonCoords);
+    console.log(Math.floor(area));
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -92,18 +98,6 @@ function getPos() {
           $("#conditions").append(tempDiv);
           $("#temp").append(Math.floor(response.main.temp * 9/5 - 459.67)+ "°F");
         });
-
-        $("#logo").on("click", getNewPos);
-
-        function getNewPos() {
-          posInterval = setInterval(getLocation, 5000);
-        }
-
-        function getLocation() {
-          getPos();
-          addMarker();
-          addToCompute();
-        }
 
         polyMarkers.push(pos);
 
@@ -294,6 +288,8 @@ for (var j=0; j<9; j++){
 // 3. Create Firebase event for adding hignhscore to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
+  console.log(childSnapshot.val());
+
   // Store everything into a variable.
   var HighName = childSnapshot.val().name;
   var HighScore = childSnapshot.val().score;
@@ -311,6 +307,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 });
 
 function maingame(){
+  console.log("start of game")
 
 clockRunning = false;
 time=30;
