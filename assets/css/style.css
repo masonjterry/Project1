@@ -4,8 +4,9 @@
 
 body {
     font-family: 'Orbitron', sans-serif;
-    background-image: url("../images/tronback.jpg");
-    /*color: white;*/
+    background-image: url("../images/simpleTron.jpg");
+    background-size: cover;
+    overflow-x: hidden;
 }
 
 p{
@@ -15,12 +16,16 @@ p{
 h2{
     text-align: center;
     font-size: 25px;
-    color: grey;
+    color: white;
 
 }
-h1{
+h1{font-size: 50px;
     text-align: center;
-    color: yellow;
+    color: #02E2F2;
+}
+
+button {
+    padding-top: 5px;
 }
 
 #structions{
@@ -45,16 +50,21 @@ h1{
     color: white;
     border: solid;
     border-color: grey;
-     border-radius:30px;
-     background: black;
-     opacity: 0.8;
+    border-radius:30px;
+    background: black;
+    opacity: 0.8;
+    margin: 10px 0px;
 }
 
 #submit{
     text-align: center;
-    background-color: green;
+    background-color: #02E2F2;
     font-size: 40px;
     border-radius:10px;
+    color: black;
+    border: none;
+    padding-top: 5px;
+    cursor:pointer;
 }
 
 .results{
@@ -64,7 +74,7 @@ h1{
 }
 
 #right{
-    color:green;
+    color: #6AF202;
 }
 
 #notright{
@@ -80,17 +90,17 @@ h1{
     height: 300px;
     border-radius: 30px;
     border:solid;
-    border-color: grey;
-
+    border-color: white;
 }
 
-#myBtn{
+#myBtn{font-weight: bolder;
     background-color: grey;
+    border: none;
 }
 
 #localscore{
     font-size: 15px;
-    color: white;
+    color: #6AF202;
 }
 
 .table{
@@ -103,7 +113,8 @@ h1{
 #init{
     text-align: center;
     font-size: 30px;
-    color:white;
+    color: white;
+    background-color: black;
 }
 .reinit{
     color:white;
