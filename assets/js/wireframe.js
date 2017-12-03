@@ -6,6 +6,7 @@ var polygonCoords = [];
 var polyMarkers = [];
 var weatherPos;
 var area;
+var posInterval;
 
 //FIND USER
 function initMap() {
@@ -21,16 +22,20 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-    map.addListener('click', addMarker);
-    map.addListener('click', addToCompute);
-    map.addListener('click', getArea);
-};
 
-$("#button").on("click", function() {
-    getPos();
-    addMarker();
-    addToCompute();
-});
+    $("#logo").on("click", getNewPos);
+
+        function getNewPos() {
+          posInterval = setInterval(getLocation, 5000);
+        }
+
+        function getLocation() {
+          console.log("I am working");
+          getPos();
+          addMarker();
+          addToCompute();
+        }
+};
 
 //FUNCTIONS
 function addMarker() {
@@ -121,7 +126,7 @@ function getPos() {
     function() {
         handleLocationError(true, infoWindow, map.getCenter());
     });
-} 
+}
 
 
  $(document).ready(function() {
@@ -185,6 +190,7 @@ function endgame(){
   $(".reinit").removeClass("hidden");
 
       // Stop the counter
+      clearInterval(posInterval);
       clearInterval(intervalId);
     clockRunning = false;
    $("#display").text("Over");
@@ -206,7 +212,7 @@ if (score > localhighscore){
     $("#score").text(score);
 
 // Assign the new score to the bottom core array if it is higher than the lowest in the list
-if (score > scorearray[8]){ 
+if (score > scorearray[8]){
 
 scorearray[8]=score;
     // Get the modal to enter the new user initials
@@ -289,7 +295,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   var HighScore = childSnapshot.val().score;
   var HighPlace = childSnapshot.val().place;
   var HighCond = childSnapshot.val().weathercond;
-  
+
 //Save the highscores to a local array
   highscorearray.push(childSnapshot.val());
   scorearray.push(childSnapshot.val().score);
@@ -315,7 +321,7 @@ var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal 
+// When the user clicks on the button, open the modal
 btn.onclick = function() {
     modal.style.display = "block";
 }
@@ -333,7 +339,7 @@ window.onclick = function(event) {
 }
 
  //Listen for the main click image to be pressed to initiate the game
-      $(".initiate").on("click", function() {    
+      $(".initiate").on("click", function() {
       // Remove the questions from the hidden class so that the user can see them
       $(".wrapper").removeClass("hidden");
       //Hide the initiation elements by adding them to the hidden class
@@ -352,7 +358,7 @@ window.onclick = function(event) {
 
       });
 //This is the re-init function to restart the game.
-      $(".reinit").on("click", function() {    
+      $(".reinit").on("click", function() {
       $(".wrapper").removeClass("hidden");
       $(".initiate").addClass("hidden");
       $("#init").addClass("hidden");
@@ -382,12 +388,12 @@ window.onclick = function(event) {
 
 
 //Once the user is happy with the performance the submit button ends the game
-      $("#submit").on("click", function() {    
+      $("#submit").on("click", function() {
 endgame();
 
       });
 }
-     
+
 maingame();
 
 
