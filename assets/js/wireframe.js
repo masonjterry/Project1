@@ -23,7 +23,7 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-    $("#logo").on("click", getNewPos);
+    $("#init").on("click", getNewPos);
 
         function getNewPos() {
           posInterval = setInterval(getLocation, 5000);
@@ -35,7 +35,6 @@ function initMap() {
           addMarker();
           addToCompute();
         }
-
 };
 
 //FUNCTIONS
@@ -384,7 +383,6 @@ window.onclick = function(event) {
     }
   }
 
-
 //Once the user is happy with the performance the submit button ends the game
       $("#submit").on("click", function() {
 endgame();
@@ -393,6 +391,5 @@ endgame();
 }
 
 maingame();
-
 
     });

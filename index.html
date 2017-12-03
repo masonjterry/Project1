@@ -37,9 +37,8 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-    <p>You have 60 seconds to run around your local area and encompass as much area as possible in the given time. But be sure to return to your original starting point!!!! Good luck!</p>
+    <p>You have 60 seconds to run and encompass as much area as possible. Good luck!</p>
   </div>
-
 </div>
 
 <div class="row">
@@ -47,50 +46,40 @@
     <h2>Today's Battle Conditions<span id="conditions"></span></h2>
   </div>
 </div>
-<!-- Row for the image -->
+
 <div class ="row">
-<div  class="col-lg-12 initiate">
-
-  <button id="init">Click to Begin</button>;
-
-</div>
+  <div  class="col-lg-12 initiate">
+    <button id="init">Click to Begin</button>;
+  </div>
 </div>
 
-</div>
 <!-- Create a wrapper for the main game -->
 <section class="wrapper hidden">
 <!--  Row for the time remaining -->
-<div class="row">
-  <div id="timeleft" class ="col-lg-12">
-    <h3>Time Remaining: <span id="display"></span></h3>
-  </div>
-</div>
-<!-- Rows for-->
-<div class="row">
-  <div class ="col-lg-12">
-    <h2>Run Now</h2>
-  </div>
-</div>
-
-  <div class ="row">
-    <div class="col-lg-4">
+  <div class="row">
+    <div id="timeleft" class ="col-lg-12">
+      <h3>Time Remaining: <span id="display"></span></h3>
     </div>
-
-<div id="map" class = "col-lg-12 mapimage">
-</div>
-    <div class="col-lg-0">
-    </div>
-</div>
-<br><br>
-
-<div class="row">
-  <div class="col-lg-4"></div>
-  <div id="submit" class="col-lg-4">
-    Finish battle
   </div>
-  <div class="col-lg-4"></div>
+  <!-- Rows for-->
+  <div class="row">
+    <div class ="col-lg-12">
+      <h2>Run Now</h2>
+    </div>
+  </div>
 
-</div>
+  <div class="row">
+    <div class ="col-lg-12">
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class ="col-lg-12">
+      <button id="submit">Finish Battle</button>
+    </div>
+  </div>
+
 </section>
 <!-- Hide the restart assets until the game is over -->
 <div class="results hidden">
