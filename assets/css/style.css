@@ -32,7 +32,7 @@ button {
     text-align: center;
 }
 
-#map{
+#map{margin-bottom: 10px;
     text-align: center;
     font-size: 20px;
     border-radius: 10px;
