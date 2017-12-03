@@ -9,6 +9,8 @@ body {
     overflow-x: hidden;
 }
 
+
+}
 p{
     padding:5px;
     color: black;
@@ -94,6 +96,14 @@ button {
     border-color: white;
     cursor: pointer;
 }
+#myBtn{
+    background-color: grey;
+}
+
+#localscore{
+    font-size: 15px;
+    color: white;
+}
 
 #myBtn{font-weight: bolder;
     background-color: #02E2F2;
@@ -124,11 +134,13 @@ button {
     text-align: center;
 }
 
-ol { 
-   list-style-type: decimal; 
+ol {
+   list-style-type: decimal;
    list-style-position: inside;
-   margin-left: 15px; 
+   margin-left: 15px;
+
 }
+
 
 .modal {
     display: none; /* Hidden by default */

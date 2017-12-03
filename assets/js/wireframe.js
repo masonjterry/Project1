@@ -146,7 +146,7 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score;
+var score=0;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
@@ -352,6 +352,8 @@ window.onclick = function(event) {
     if (!clockRunning) {
         intervalId = setInterval(count, 1000);
         clockRunning = true;
+
+
     }
 
       });
@@ -377,6 +379,7 @@ window.onclick = function(event) {
 //Counting function...run the endgame function when the time reaches 0
     function count() {
     time--;
+    getUserLocation();
     $("#display").text(time);
     if (time==0){
       endgame();
