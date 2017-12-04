@@ -41,6 +41,7 @@ button {
     border-radius: 10px;
     height: 500px;
     width: 500px;
+    margin-bottom: 10px;
 }
 
 #timeleft{
