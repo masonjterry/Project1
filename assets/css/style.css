@@ -124,6 +124,7 @@ button {
 .initiate{
     text-align: center;
     margin-top: 30px;
+    cursor: pointer;
 }
 #init{margin-top: 10px;
     text-align: center;
