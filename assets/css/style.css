@@ -41,6 +41,7 @@ button {
     border-radius: 10px;
     height: 500px;
     width: 500px;
+    margin-bottom: 10px;
 }
 
 #timeleft{
@@ -158,6 +159,7 @@ ol {
 
 /* Modal Content/Box */
 .modal-content {
+    text-align: center;
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
