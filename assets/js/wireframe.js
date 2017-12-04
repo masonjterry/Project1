@@ -104,10 +104,6 @@ function getPos() {
         //Pushes geolocation coords to polygonCoords array in area readable format
         polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
 
-        //Shows map over geolocation coordinates
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Start');
-        infoWindow.open(map);
         map.setCenter(pos);
 
         getArea();
