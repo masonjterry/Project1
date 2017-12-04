@@ -20,11 +20,13 @@ h2{
     font-size: 25px;
     color: white;
     line-height: 30px;
+    text-shadow: 0 0 50px #02E2F2;
 
 }
 h1{font-size: 50px;
     text-align: center;
     color: #02E2F2;
+    text-shadow: 0 0 50px white;
 }
 
 button {
@@ -127,6 +129,7 @@ button {
     text-align: center;
     font-size: 30px;
     color: white;
+    text-shadow: 0 0 50px #02E2F2;
 }
 .reinit{
     color:white;
