@@ -6,16 +6,18 @@
 
   <!-- Added link to the jQuery library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- CSS Reset -->
   <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
   <!-- Added a link to Bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
-      <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-
-    <!-- Moment.js Reference -->
-    <!-- <script src="http://momentjs.com/downloads/moment.js"></script>   -->
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <!-- Moment.js Reference -->
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
 </head>
 <body>
@@ -126,18 +128,19 @@ Your high Score:  <span id="localhigh"></span>
 <div id="leaderboard" class="col-lg-6">
 <!--   Pull this from Firebase -->
   <h2>Leaderboard</h2>
-                <table class="table" id='score-table'>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Score</th>
-                    <th>Place</th>
-                    <th>Weather</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+  <table class="table" id='score-table'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Score</th>
+        <th>Place</th>
+        <th>Weather</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  
 </div>
   <div class="col-lg-3">
   </div>
@@ -150,13 +153,12 @@ Your high Score:  <span id="localhigh"></span>
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">Submit</span>
- <form>
-
-                <div class="form-group">
-                  <label for="highscore-name-input">New Highscorer Name</label>
-                  <input class="form-control" id="highscore-name-input" type="text">
-                </div>
-                </form>
+    <form>
+      <div class="form-group">
+        <label for="highscore-name-input">New Highscorer Name</label>
+        <input class="form-control" id="highscore-name-input" type="text">
+      </div>
+    </form>
   </div>
 
 </div>
@@ -170,8 +172,9 @@ Your high Score:  <span id="localhigh"></span>
 </div>
 
 <br><br>
-
+<!-- Google Maps API -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtkhA1IAVN1EubX5cCU1pytpjx5CxMpfE&libraries=geometry&callback=initMap"></script>
+<!-- JavaScript -->
 <script type="text/javascript" src="assets/js/wireframe.js"></script>
 </body>
 </html>

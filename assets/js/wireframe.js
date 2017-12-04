@@ -7,6 +7,8 @@ var polyMarkers = [];
 var weatherPos;
 var area;
 var posInterval;
+var currentCondition;
+var currentCity;
 
 //FIND USER
 function initMap() {
@@ -83,8 +85,8 @@ function getPos() {
           url: weatherURL,
           method: "GET"
         }).done(function(response) {
-          currentCond=(response.weather[0].main);
-          currentPlace=(response.name);
+          currentCondition=(response.weather[0].main);
+          currentCity=(response.name);
 
           var icon = "https://openweathermap.org/img/w/"+response.weather[0].icon+".png";
           var iconImg = $("<img src=\""+icon+"\">");
@@ -148,8 +150,8 @@ var database = firebase.database();
 
 var score=0;
 var currentTemp=0;
-var currentCond="";
-var currentPlace="";
+var currentCond;
+var currentPlace;
 var scorearray=[];
 var highscorearray=[];
 var newscorearray=[];
@@ -235,6 +237,9 @@ span.onclick = function() {
 
 $(".close").on("click", function(event) {
   event.preventDefault();
+
+  currentCond = currentCondition;
+  currentPlace = currentCity;
 
   // Grabs new Highscorer initials
   var highscorer = $("#highscore-name-input").val().trim();
@@ -340,6 +345,8 @@ window.onclick = function(event) {
 
  //Listen for the main click image to be pressed to initiate the game
       $(".initiate").on("click", function() {
+        count();
+
       // Remove the questions from the hidden class so that the user can see them
       $(".wrapper").removeClass("hidden");
       //Hide the initiation elements by adding them to the hidden class
