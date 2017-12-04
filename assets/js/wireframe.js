@@ -104,10 +104,6 @@ function getPos() {
         //Pushes geolocation coords to polygonCoords array in area readable format
         polygonCoords.push(new google.maps.LatLng(pos.lat, pos.lng));
 
-        //Shows map over geolocation coordinates
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Start');
-        infoWindow.open(map);
         map.setCenter(pos);
 
         getArea();
@@ -146,7 +142,7 @@ var database = firebase.database();
 
 // Initialize Variables
 
-var score=0;
+var score;
 var currentTemp=0;
 var currentCond="";
 var currentPlace="";
@@ -352,8 +348,6 @@ window.onclick = function(event) {
     if (!clockRunning) {
         intervalId = setInterval(count, 1000);
         clockRunning = true;
-
-
     }
 
       });
@@ -379,13 +373,11 @@ window.onclick = function(event) {
 //Counting function...run the endgame function when the time reaches 0
     function count() {
     time--;
-    getUserLocation();
     $("#display").text(time);
     if (time==0){
       endgame();
     }
   }
-
 
 //Once the user is happy with the performance the submit button ends the game
       $("#submit").on("click", function() {
@@ -395,6 +387,5 @@ endgame();
 }
 
 maingame();
-
 
     });
