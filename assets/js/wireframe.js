@@ -85,8 +85,8 @@ function getPos() {
           url: weatherURL,
           method: "GET"
         }).done(function(response) {
-          currentCondition=(response.weather[0].main);
-          currentCity=(response.name);
+          currentCondition = response.weather[0].main;
+          currentCity = response.name;
 
           var icon = "https://openweathermap.org/img/w/"+response.weather[0].icon+".png";
           var iconImg = $("<img src=\""+icon+"\">");
@@ -146,8 +146,10 @@ var database = firebase.database();
 
 var score;
 var currentTemp=0;
-var currentCond= currentCondition;
-var currentPlace=currentCity;
+var currentCond = currentCondition;
+console.log(currentCond);
+var currentPlace = currentCity;
+console.log(currentPlace);
 var scorearray=[];
 var highscorearray=[];
 var newscorearray=[];
