@@ -28,6 +28,7 @@ function initMap() {
     $("#logo").on("click", getNewPos);
 
         function getNewPos() {
+
           posInterval = setInterval(getLocation, 5000);
         }
 
@@ -146,10 +147,8 @@ var database = firebase.database();
 
 var score;
 var currentTemp=0;
-var currentCond = currentCondition;
-console.log(currentCond);
-var currentPlace = currentCity;
-console.log(currentPlace);
+var currentCond;
+var currentPlace;
 var scorearray=[];
 var highscorearray=[];
 var newscorearray=[];
@@ -182,6 +181,10 @@ var time=30;
 // funtion to finish the game gets called by either a timeout or a submit
 function endgame(){
   score = area;
+  currentPlace = currentCondition;
+  currentCond = currentCity;
+  console.log(currentCondition);
+  console.log(currentCity);
   // hide the questions
   $(".wrapper").addClass("hidden");
   //show the results by removing them from the hidden class
