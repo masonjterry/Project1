@@ -308,7 +308,7 @@ function maingame(){
   console.log("start of game")
 
 clockRunning = false;
-time=30;
+time=300;
 
 // Get the modal
 var modal = document.getElementById('instModal');
@@ -364,7 +364,7 @@ window.onclick = function(event) {
 
 //Reset variables.
       clockRunning = false;
-      time=30;
+      time=300;
 
 //Initialize clock to 1 second intervals
     if (!clockRunning) {
