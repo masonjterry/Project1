@@ -88,10 +88,11 @@ button {
 }
 
 .hidden{
-    display:none;
+    display: none;
 }
 
-#logo{margin: 0;
+#logo{
+    margin: 0;
     text-align: center;
     height: 300px;
     border-radius: 30px;
