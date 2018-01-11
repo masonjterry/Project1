@@ -4,7 +4,7 @@
 
 body {
     font-family: 'Orbitron', sans-serif;
-    background-image: url("../images/tronback.jpg");
+    background-image: url("../images/tronbike.jpg");
     background-size: cover;
     overflow-x: hidden;
 }
@@ -191,9 +191,9 @@ ol {
     padding: 0;
 }
 
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
 
     body {font-family: 'Orbitron', sans-serif;
@@ -204,7 +204,7 @@ ol {
 
     h1 {font-size: 150px;
         margin-top: 50px;
-    }   
+    }
 
     h2 {font-size: 50px;
         line-height: 65px;
@@ -213,7 +213,7 @@ ol {
 
     #myBtn {font-size: 40px;
         margin-top: 70px;
-        margin-bottom: 100px; 
+        margin-bottom: 100px;
         background-color: #02E2F2;
         border-radius: 60px;
     }
