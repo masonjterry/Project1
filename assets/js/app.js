@@ -128,13 +128,13 @@ function getPos() {
  $(document).ready(function() {
 
   let config = {
-    apiKey: "AIzaSyBVKQZeo1H6cABaYb09pdm4Ez2ZXhhSY_A",
-    authDomain: "streettron-1d8c5.firebaseapp.com",
-    databaseURL: "https://streettron-1d8c5.firebaseio.com",
-    projectId: "streettron-1d8c5",
+    apiKey: "AIzaSyCBOUMDSCm0TrHG0vmNwZJC7rAxSizcM2A",
+    authDomain: "street-tron.firebaseapp.com",
+    databaseURL: "https://street-tron.firebaseio.com",
+    projectId: "street-tron",
     storageBucket: "",
-    messagingSenderId: "679629315262"
-};
+    messagingSenderId: "346019655912"
+  };
 
 firebase.initializeApp(config);
 
@@ -246,7 +246,7 @@ do {
 let newindex=scorearray.indexOf(score);
 
 // Delete the lowest score of the old table
-highscorearray[8]=null;
+highscorearray[8] = null;
 
 //Add the new hig score to the correct element of the array
 highscorearray.splice(newindex,0, newHigh);
@@ -264,8 +264,8 @@ newscorearray[n]=highscorearray[n];
 }
 
 // Reset the arrays
-scorearray=[];
-highscorearray=[];
+scorearray = [];
+highscorearray = [];
 // Clear database ahead of a write
 database.ref().set(null);
 
