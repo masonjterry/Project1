@@ -2,161 +2,171 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StreetTron</title>
-
+  <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- CSS Reset -->
   <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <!-- Moment -->
   <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
 </head>
 <body>
 
-<div class="row">
-  <div class ="col-lg-12">
-    <h1>StreetTron</h1>
-  </div>
-</div>
-
-<div id=structions>
-  <button id="myBtn">Instructions</button>
-</div>
-
-<!-- The Modal -->
-<div id="instModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>You have 60 seconds to run and encompass as much area as possible. Good luck!</p>
-  </div>
-</div>
-
-<div class="row">
-  <div id="weather" class ="col-lg-12">
-    <h2>Today's Battle Conditions<span id="conditions"></span></h2>
-  </div>
-</div>
-
-<div class ="row">
-  <div  id="marginNone" class="col-lg-12 initiate">
-    <img id="logo" src="assets/images/bike2.jpg">;
-  </div>
-</div>
-
-<div class ="row">
-  <div  id="init" class="col-lg-12 initiate">
-    Click to Begin
-  </div>
-</div>
-
-<!-- Create a wrapper for the main game -->
-<section class="wrapper hidden">
+<div class="container-fluid">
 
   <div class="row">
-    <div id="timeleft" class ="col-lg-12">
-      <h3>Time Remaining: <span id="display"></span></h3>
+    <div class ="col-md-12">
+      <h1>StreetTron</h1>
+    </div>
+  </div>
+
+  <div id=structions>
+    <button id="myBtn">Instructions</button>
+  </div>
+
+  <!-- The Modal -->
+  <div id="instModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>You have 60 seconds to run and encompass as much area as possible. Good luck!</p>
     </div>
   </div>
 
   <div class="row">
-    <div class ="col-lg-12">
-      <h2>Run Now</h2>
+    <div id="weather" class ="col-md-12">
+      <h2>Today's Battle Conditions<span id="conditions"></span></h2>
     </div>
   </div>
 
   <div class ="row">
-    <div class="col-lg-4">
-  </div>
-
-  <div id="map" class = "col-lg-8 mapimage">;
-  </div>
-
-  <div class="row">
-    <div class="col-lg-4">
-    </div>
-    <div id="submit" class="col-lg-4">
-      Finish battle
-    </div>
-    <div class="col-lg-4">
+    <div  id="marginNone" class="col-md-12 initiate">
+      <img id="logo" src="assets/Images/bike2.jpg">;
     </div>
   </div>
 
-</section>
-
-<!-- Hide the restart assets until the game is over -->
-<div class="results hidden">
-  <div class="row">
-    <div class = "col-lg-3">
-    </div>
-    <div id="right" class = "col-lg-6 results">
-      Score:  <span id="score"></span>
-    </div>
-    <div class = "col-lg-3">
+  <div class ="row">
+    <div  id="init" class="col-md-12 initiate">
+      Click to Begin
     </div>
   </div>
 
-  <div class="row">
-    <div class = "col-lg-3">
-    </div>
-    <div id="localscore" class = "col-lg-6">
-      Your high Score:  <span id="localhigh"></span>
-    </div>
-    <div class = "col-lg-3">
-    </div>
-  </div>
+  <!-- Create a wrapper for the main game -->
+  <section class="wrapper hidden">
 
-  <div class="row">
-    <div class="col-lg-3">
-    </div>
-    <div id="leaderboard" class="col-lg-6">
-      <h2>Leaderboard</h2>
-
-      <table class="table" id='score-table'>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Score</th>
-            <th>Place</th>
-            <th>Weather</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-
-    </div>
-  <div class="col-lg-3">
-  </div>
-</div>
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">Submit</span>
-    <form>
-      <div class="form-group">
-        <label for="highscore-name-input">New Highscorer Name</label>
-        <input class="form-control" id="highscore-name-input" type="text">
+    <div class="row">
+      <div id="timeleft" class ="col-md-12">
+        <h3>Time Remaining: <span id="display"></span></h3>
       </div>
-    </form>
-  </div>
-</div>
-
-<!-- Hide the restart assets until the game is over -->
-<div class="reinit hidden">
-  <div class="row">
-    <div class="col-lg-4">
     </div>
-      <div class="col-lg-4" id="submit">Click to Play again
+
+    <div class="row">
+      <div class ="col-md-12">
+        <h2>Run Now</h2>
       </div>
-    <div class="col-lg-4">
+    </div>
+
+    <div class ="row">
+      <div class="col-md-4">
+    </div>
+
+    <div id="map" class = "col-md-8 mapimage">;
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+      <div id="submit" class="col-md-4">
+        Finish battle
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Hide the restart assets until the game is over -->
+  <div class="results hidden">
+    <div class="row">
+      <div class = "col-md-3">
+      </div>
+      <div id="right" class = "col-md-6 results">
+        Score:  <span id="score"></span>
+      </div>
+      <div class = "col-md-3">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class = "col-md-3">
+      </div>
+      <div id="localscore" class = "col-md-6">
+        Your high Score:  <span id="localhigh"></span>
+      </div>
+      <div class = "col-md-3">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div id="leaderboard" class="col-md-6">
+        <h2>Leaderboard</h2>
+
+        <table class="table" id='score-table'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Score</th>
+              <th>Place</th>
+              <th>Weather</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+
+      </div>
+    <div class="col-md-3">
+    </div>
+  </div>
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">Submit</span>
+      <form>
+        <div class="form-group">
+          <label for="highscore-name-input">New Highscorer Name</label>
+          <input class="form-control" id="highscore-name-input" type="text">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Hide the restart assets until the game is over -->
+  <div class="reinit hidden">
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+        <div class="col-md-4" id="submit">Click to Play again
+        </div>
+      <div class="col-md-4">
+      </div>
     </div>
   </div>
 </div>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtkhA1IAVN1EubX5cCU1pytpjx5CxMpfE&libraries=geometry&callback=initMap"></script>
-<script type="text/javascript" src="assets/js/wireframe.js"></script>
+<script type="text/javascript" src="assets/js/app.js"></script>
 </body>
 </html>

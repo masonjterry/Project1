@@ -1,14 +1,14 @@
-var infoWindow;
-var map;
-var pos;
-var poly;
-var polygonCoords = [];
-var polyMarkers = [];
-var weatherPos;
-var area;
-var posInterval;
-var currentCondition;
-var currentCity;
+let infoWindow;
+let map;
+let pos;
+let poly;
+let polygonCoords = [];
+let polyMarkers = [];
+let weatherPos;
+let area;
+let posInterval;
+let currentCondition;
+let currentCity;
 
 //FIND USER
 function initMap() {
@@ -32,7 +32,6 @@ function initMap() {
         }
 
         function getLocation() {
-          console.log("I am working");
           getPos();
           addMarker();
           addToCompute();
@@ -41,11 +40,11 @@ function initMap() {
 
 //FUNCTIONS
 function addMarker() {
-    var path = poly.getPath();
-        console.log(pos);
+    let path = poly.getPath();
+
     path.push(new google.maps.LatLng(pos));
     // Add a new marker at the new plotted point on the polyline.
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
         position: (new google.maps.LatLng(pos)),
         title: '#' + path.getLength(),
         map: map
@@ -59,7 +58,6 @@ function addToCompute() {
 
 function getArea() {
     area = Math.floor(google.maps.geometry.spherical.computeArea(polygonCoords));
-    console.log(Math.floor(area));
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -77,9 +75,9 @@ function getPos() {
             lng: position.coords.longitude
         };
 
-        var lat = pos.lat;
-        var lng = pos.lng;
-        var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
+        let lat = pos.lat;
+        let lng = pos.lng;
+        let weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lng+"&appid=5a7c8dc5e0729631e1b2797c906928ed";
 
         $.ajax({
           url: weatherURL,
@@ -88,11 +86,11 @@ function getPos() {
           currentCondition=(response.weather[0].main);
           currentCity=(response.name);
 
-          var icon = "https://openweathermap.org/img/w/"+response.weather[0].icon+".png";
-          var iconImg = $("<img src=\""+icon+"\">");
-          var mainDiv = $("<div>").attr("id", "city");
-          var iconDiv = $("<div>").attr("id", "icon");
-          var tempDiv = $("<div>").attr("id", "temp");
+          let icon = "https://openweathermap.org/img/w/"+response.weather[0].icon+".png";
+          let iconImg = $("<img src=\""+icon+"\">");
+          let mainDiv = $("<div>").attr("id", "city");
+          let iconDiv = $("<div>").attr("id", "icon");
+          let tempDiv = $("<div>").attr("id", "temp");
           $("#conditions").append(mainDiv);
           $("#city").append(response.name + ", " + response.sys.country);
           $("#conditions").append(iconDiv);
@@ -129,44 +127,40 @@ function getPos() {
 
  $(document).ready(function() {
 
-  var config = {
-    apiKey: "AIzaSyBVKQZeo1H6cABaYb09pdm4Ez2ZXhhSY_A",
-    authDomain: "streettron-1d8c5.firebaseapp.com",
-    databaseURL: "https://streettron-1d8c5.firebaseio.com",
-    projectId: "streettron-1d8c5",
+  let config = {
+    apiKey: "AIzaSyCBOUMDSCm0TrHG0vmNwZJC7rAxSizcM2A",
+    authDomain: "street-tron.firebaseapp.com",
+    databaseURL: "https://street-tron.firebaseio.com",
+    projectId: "street-tron",
     storageBucket: "",
-    messagingSenderId: "679629315262"
-};
+    messagingSenderId: "346019655912"
+  };
 
 firebase.initializeApp(config);
 
-var database = firebase.database();
+let database = firebase.database();
 
-// Initialize Variables
+// Initialize letiables
 
-var score;
-var currentTemp=0;
-var currentCond= currentCondition;
-var currentPlace=currentCity;
-var scorearray=[];
-var highscorearray=[];
-var newscorearray=[];
+let score;
+let currentTemp = 0;
+let currentCond = currentCondition;
+let currentPlace = currentCity;
+let scorearray = [];
+let highscorearray = [];
+let newscorearray = [];
 
 // Function to determine the correct order of the high scores
 function bubbleSort(arr) {
-  // everytime we iterate over the array, we know at least the last value has
-  // been sorted, so we don't have to iterate to that index again
-  var end = arr.length - 1;
-  // set flag to true, if we have to swap any values, the flag will be then set
-  // to false
+
+  let end = arr.length - 1;
+
   sorted = true;
-  for (var i = 0; i < end; i++) {
-    // if the value of the current index is less than the next index, we know
-    // the list is not properly sorted and swap their positions.
+  for (let i = 0; i < end; i++) {
+
     if (arr[i] < arr[i + 1]) {
-      // we have to create a temporary variable to hold a value, so we can swap
-      // the values of the two positions
-      var temp = arr[i];
+
+      let temp = arr[i];
       arr[i] = arr[i + 1];
       arr[i + 1] = temp;
       sorted = false;
@@ -174,8 +168,8 @@ function bubbleSort(arr) {
   }
 }
 
-var clockRunning = false;
-var time=30;
+let clockRunning = false;
+let time = 60;
 
 // funtion to finish the game gets called by either a timeout or a submit
 function endgame(){
@@ -193,11 +187,10 @@ function endgame(){
     clockRunning = false;
    $("#display").text("Over");
 
-var localhighscore=(localStorage.getItem("highscore"));
-console.log(localhighscore);
+let localhighscore=(localStorage.getItem("highscore"));
 
 if (localhighscore == null){
-  localhighscore=0;
+  localhighscore = 0;
 }
 
 if (score > localhighscore){
@@ -214,10 +207,10 @@ if (score > scorearray[8]){
 
 scorearray[8]=score;
     // Get the modal to enter the new user initials
-var modal = document.getElementById('myModal');
+let modal = document.getElementById('myModal');
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let span = document.getElementsByClassName("close")[0];
 
     modal.style.display = "block";
 
@@ -235,10 +228,10 @@ $(".close").on("click", function(event) {
   event.preventDefault();
 
   // Grabs new Highscorer initials
-  var highscorer = $("#highscore-name-input").val().trim();
+  let highscorer = $("#highscore-name-input").val().trim();
 
   // // Creates local "temporary" object for holding new highscore data
-  var newHigh = {
+  let newHigh = {
     name: highscorer,
     place: currentPlace,
     score: score,
@@ -250,33 +243,33 @@ do {
   bubbleSort(scorearray);
 } while (!sorted);
 
-var newindex=scorearray.indexOf(score);
+let newindex=scorearray.indexOf(score);
 
 // Delete the lowest score of the old table
-highscorearray[8]=null;
+highscorearray[8] = null;
 
 //Add the new hig score to the correct element of the array
 highscorearray.splice(newindex,0, newHigh);
 
-var table = document.getElementById("score-table");
+let table = document.getElementById("score-table");
 
 // Clear the old table in the HTML
 while(table.rows.length > 0) {
   table.deleteRow(0);
 }
 
-for (var n=0; n<9; n++){
+for (let n = 0; n < 9; n++){
   // // Uploads highscore data to the database
 newscorearray[n]=highscorearray[n];
 }
 
 // Reset the arrays
-scorearray=[];
-highscorearray=[];
+scorearray = [];
+highscorearray = [];
 // Clear database ahead of a write
 database.ref().set(null);
 
-for (var j=0; j<9; j++){
+for (let j = 0; j < 9; j++){
   // // Uploads highscore data to the database
 
   database.ref().push(newscorearray[j]);
@@ -286,13 +279,11 @@ for (var j=0; j<9; j++){
 // 3. Create Firebase event for adding hignhscore to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
-  console.log(childSnapshot.val());
-
-  // Store everything into a variable.
-  var HighName = childSnapshot.val().name;
-  var HighScore = childSnapshot.val().score;
-  var HighPlace = childSnapshot.val().place;
-  var HighCond = childSnapshot.val().weathercond;
+  // Store everything into a letiable.
+  let HighName = childSnapshot.val().name;
+  let HighScore = childSnapshot.val().score;
+  let HighPlace = childSnapshot.val().place;
+  let HighCond = childSnapshot.val().weathercond;
 
 //Save the highscores to a local array
   highscorearray.push(childSnapshot.val());
@@ -305,19 +296,18 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 });
 
 function maingame(){
-  console.log("start of game")
 
 clockRunning = false;
-time=300;
+time = 60;
 
 // Get the modal
-var modal = document.getElementById('instModal');
+let modal = document.getElementById('instModal');
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+let btn = document.getElementById("myBtn");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
@@ -362,9 +352,9 @@ window.onclick = function(event) {
       // $(".reinit").addClass("hidden");
       // $(".results").addClass("hidden");
 
-//Reset variables.
+//Reset letiables.
       clockRunning = false;
-      time=300;
+      time = 60;
 
 //Initialize clock to 1 second intervals
     if (!clockRunning) {
@@ -377,7 +367,7 @@ window.onclick = function(event) {
     function count() {
     time--;
     $("#display").text(time);
-    if (time==0){
+    if (time == 0){
       endgame();
     }
   }
