@@ -8,3 +8,5 @@
 #### We used Google Maps API and OpenWeather API.
 #### We used Bootstrap to make the game mobile reponsive.
 #### We used Firebase to store the high scores.
+
+![StreetTron](images/street-tron.png)
